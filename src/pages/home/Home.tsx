@@ -112,7 +112,7 @@ const Home = () => {
     openModal();
   };
 
-  const removeItemProductFromArray = (idsArray: string[]) => {
+  const removeItemProductFromArray = (idsArray: readonly string[]) => {
     const newArrayProducts = addedProducts.filter(
       (product) => idsArray.some((id) => product.id === id) === false
     );

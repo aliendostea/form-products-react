@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-interface inputTypes {
+interface TextfieldProps {
   id: string;
   name: string;
   label: string;
@@ -66,19 +66,19 @@ export const SpanErrorStyled = styled.div`
   margin-top: 0.5rem;
 `;
 
-const Textfield: React.FC<inputTypes> = ({
+const Textfield = ({
   name,
   label,
   error,
   touched,
   ...props
-}) => {
+}: TextfieldProps) => {
   return (
     <BoxStyled>
       <LabelStyled touched={touched} htmlFor={name}>
         {label}
       </LabelStyled>
-      <InputStyled {...props} />
+      <InputStyled name={name} {...props} />
 
       {error && touched && <SpanErrorStyled>{error}</SpanErrorStyled>}
     </BoxStyled>

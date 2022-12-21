@@ -1,59 +1,32 @@
 import { useState } from "react";
 import { Button } from "@/components/button";
 import { useFormik } from "formik";
-import { AddNewProduct, AddNewProductBtn, HomeStyled } from "./home.styled";
+import {
+  AddNewProduct,
+  AddNewProductBtn,
+  FormStyled,
+  HomeStyled,
+} from "./home.styled";
 import * as Yup from "yup";
-import styled from "styled-components";
 import Card from "@/components/card";
 import Textfield from "@/components/textField";
 import DataTable from "@/components/table";
 import useModal from "@/hooks/use-modal";
 import Modal from "@/components/modal";
 import AddIcon from "@mui/icons-material/Add";
-
-export interface ProductProps {
-  id: string;
-  internalCode: string;
-  name: string;
-  price: string;
-  power: string;
-  description: string;
-  available: string;
-  discount: string;
-  image: string;
-}
+import { ProductProps } from "@/models/product";
 
 const initialValues: ProductProps = {
-  id: "",
-  internalCode: "",
-  name: "",
-  price: "",
-  power: "",
-  description: "",
-  available: "",
-  discount: "",
-  image: "",
+  id: "789",
+  internalCode: "2332-567",
+  name: "Bombillo LED dicróico. Rosca GU10",
+  price: createCurrencyAndPrice("10.8"),
+  power: "5W",
+  description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+  available: "true",
+  discount: "20%",
+  image: "bombillo-LED-dicróico.png",
 };
-
-export const FormStyled = styled.form`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem 1rem;
-
-  & button {
-    grid-column: 1 / 4;
-  }
-`;
-
-export const ProductHorizontalStyled = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2rem 1rem;
-
-  & span {
-    font-size: 1.7rem;
-  }
-`;
 
 function createProvisionalId() {
   const date = new Date();

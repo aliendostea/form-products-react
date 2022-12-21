@@ -42,3 +42,13 @@ export const AddNewProductBtn = styled.button`
     transform: translateY(-3px);
   }
 `;
+
+export const FormStyled = styled.form`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 1rem;
+
+  & button {
+    grid-column: 1 / 4;
+  }
+`;

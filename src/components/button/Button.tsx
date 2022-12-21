@@ -44,9 +44,7 @@ interface ButtonProps {
 }
 
 const Button = ({ label }: ButtonProps) => {
-  const handleOnClick = () => {
-    console.log("handleOnClick");
-  };
+  const handleOnClick = () => {};
   return (
     <ButtonStyles onClick={handleOnClick} type="submit">
       {label}

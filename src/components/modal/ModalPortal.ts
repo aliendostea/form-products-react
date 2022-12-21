@@ -8,7 +8,7 @@ interface ModalProps {
 }
 
 const ModalPortal = ({ children, modalRootId }: ModalProps) => {
-  const [modalRoot, setModalRoot] = useState<any>(null);
+  const [modalRoot, setModalRoot] = useState<any | null>(null);
   const el = useRef(document.createElement("div"));
 
   useEffect(() => {

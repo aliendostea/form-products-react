@@ -59,7 +59,7 @@ export const useAddDataFirebase = () => {
   ) => {
     setLoadingAddDocToDB(true);
     try {
-      const res = await addDoc(collection, product);
+      await addDoc(collection, product);
 
       /*  console.log("res", res);
       console.log("res.id", res.id); */
@@ -100,13 +100,6 @@ export const useDeleteDataFirebase = () => {
   const [isItemDeleted, setIsItemDeleted] = useState(false);
   const [loadingItemDeleted, setLoadingItemDeleted] = useState(false);
 
-  async function callBatchDelete(id: string) {
-    const productToDelete = doc(db, "products", id);
-    console.log("productToDelete", productToDelete);
-    batch.delete(productToDelete);
-    await batch.commit();
-  }
-
   const deleteDocInDB = async (idsProduct: string[]) => {
     setLoadingItemDeleted(true);
     try {
@@ -123,12 +116,6 @@ export const useDeleteDataFirebase = () => {
       }
 
       await batch.commit();
-
-      /*  const results = await Promise.allSettled([
-        idsProduct.map((id) => callBatchDelete(id)),
-      ]);
-
- */
 
       /*   const productToDelete = doc(db, "products", idProduct);
       console.log("productToDelete", productToDelete);

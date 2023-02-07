@@ -29,8 +29,7 @@ export default function EnhancedTableToolbar({
   getData,
   handleClickEditProduct,
 }: EnhancedTableToolbarProps) {
-  const [isItemDeleted, deleteDocInDB, loadingItemDeleted] =
-    useDeleteDataFirebase();
+  const [, deleteDocInDB, loadingItemDeleted] = useDeleteDataFirebase();
   const [isToastActive, setIsToastActive] = useState(false);
   const [isModalActive, openModal, closeModal, onMouseDownModal, modalRef] =
     useModal();

@@ -1,9 +1,5 @@
 import styled, { css } from "styled-components";
 
-interface HeaderUserAvatarProps {
-  isActive: boolean;
-}
-
 interface BtnSidebarOpenCloseProps {
   isActive: boolean;
 }

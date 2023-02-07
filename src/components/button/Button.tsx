@@ -81,10 +81,15 @@ interface ButtonProps {
   label?: string;
   disabled?: boolean;
   btnLoader?: boolean;
+  handleOnClick?: () => void;
 }
 
-const Button = ({ label, disabled = false, btnLoader }: ButtonProps) => {
-  const handleOnClick = () => {};
+const Button = ({
+  label,
+  disabled = false,
+  btnLoader,
+  handleOnClick,
+}: ButtonProps) => {
   return (
     <ButtonStyles
       onClick={handleOnClick}

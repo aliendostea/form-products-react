@@ -29,7 +29,7 @@ interface HomeFormInputProps {
 
 const HomeFormInput = ({ getData }: HomeFormInputProps) => {
   const [isToastActive, setIsToastActive] = useState(false);
-  const [isAdded, addDocToDB, loadingAddDocToDB] = useAddDataFirebase();
+  const [, addDocToDB, loadingAddDocToDB] = useAddDataFirebase();
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors } =
     useFormik({

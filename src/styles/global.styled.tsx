@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { device } from "./deviceMediaQuerys.styled";
 
 export const fontFamily1 = `'Cairo', sans-serif`;
 export const fontFamily2 = `'Space Grotesk', sans-serif`;

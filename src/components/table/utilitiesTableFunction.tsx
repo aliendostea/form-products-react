@@ -22,11 +22,8 @@ export function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function stableSort<ProductProps>(
-  array: readonly ProductProps[],
-  comparator: (a: ProductProps, b: ProductProps) => number
-) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+export function stableSort(array: any[], comparator: (a: any, b: any) => any) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [any, any]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {

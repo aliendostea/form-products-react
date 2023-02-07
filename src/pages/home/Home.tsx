@@ -47,15 +47,17 @@ const Home = () => {
     openModal();
   };
 
+  /*  
   const removeItemProductFromArray = async (idsArray: string[]) => {
-    /*  const newArrayProducts = data.filter(
+    const newArrayProducts = data.filter(
       (product) => idsArray.some((id) => product.id === id) === false
     );
     */
-    /*  await deleteDocInDB([...idsArray, "not9999"]);
+  /*  await deleteDocInDB([...idsArray, "not9999"]);
 
-    getData(productsCollectionRef); */
+    getData(productsCollectionRef); 
   };
+  */
 
   useEffect(() => {
     getData(productsCollectionRef);

@@ -3,7 +3,6 @@ import { Button } from "@/components/button";
 import Card from "@/components/card";
 import { NotificationToast } from "@/components/notificationToast";
 import Textfield from "@/components/textField";
-import { ProductProps } from "@/models/product";
 import { useFormik } from "formik";
 import { useUpdateDataFirebase } from "@/hooks/use-request-data-firestore";
 import { validationSchema } from "@/validation/validationSchema";
@@ -33,7 +32,7 @@ const HomeEditItemForm = ({
   getData,
 }: HomeEditItemFormProps) => {
   const [isToastActive, setIsToastActive] = useState(false);
-  const [isUpdate, updateDocToDB, loadingUpdateDoc] = useUpdateDataFirebase();
+  const [, updateDocToDB, loadingUpdateDoc] = useUpdateDataFirebase();
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors } =
     useFormik({

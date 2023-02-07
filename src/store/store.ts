@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 
 //// FIX INTERCEFA TYPEEEESS!!!!
 
+export interface InitialStoreProps {
+  isSidebarOpen: boolean;
+}
+
+interface UserActionsProps {
+  TOGGLE_SIDEBAR: (currentState: InitialStoreProps) => void;
+}
+
 let globalState: any = {};
 let listeners: any = [];
 let actions: any = {};
@@ -30,7 +38,10 @@ export const useStore = () => {
   return [globalState, dispatch] as const;
 };
 
-export const initStore = (userActions, initialState) => {
+export const initStore = (
+  userActions: UserActionsProps,
+  initialState: InitialStoreProps
+) => {
   if (initialState) {
     globalState = { ...globalState, ...initialState };
   }

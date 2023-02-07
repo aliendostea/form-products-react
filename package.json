@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint ."
@@ -17,6 +17,7 @@
     "@mui/x-data-grid": "^5.17.16",
     "babel-plugin-styled-components": "^2.0.7",
     "eslint-plugin-react": "^7.31.8",
+    "firebase": "^9.16.0",
     "formik": "^2.2.6",
     "gsap": "^3.11.3",
     "react": "^17.0.2",

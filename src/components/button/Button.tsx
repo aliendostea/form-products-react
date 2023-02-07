@@ -1,13 +1,17 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-export const ButtonStyles = styled.button`
+interface ButtonLoaderProps {
+  isLoading?: boolean;
+}
+
+export const ButtonStyles = styled.button<ButtonLoaderProps>`
   &,
   &:link,
   &:visited {
     width: 17rem;
     display: inline-block;
     font-size: 1.7rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     text-decoration: none;
     white-space: nowrap;
@@ -16,9 +20,10 @@ export const ButtonStyles = styled.button`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    color: white;
     padding: 25px 10px;
     border: none;
-    border-radius: 20px;
+    border-radius: 11px;
     background-color: var(--color-primary);
     outline: none;
     cursor: pointer;
@@ -36,18 +41,59 @@ export const ButtonStyles = styled.button`
     &:focus {
       outline: none;
     }
+
+    ${({ isLoading }) =>
+      isLoading
+        ? css`
+            padding: 19px 10px;
+            filter: brightness(92%);
+            cursor: not-allowed;
+
+            &:hover {
+              transform: translateY(0);
+            }
+          `
+        : css``};
   }
 `;
 
+const rotateLoader = keyframes`
+   0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const ButtonLoader = styled.span`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #fff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: ${rotateLoader} 1s linear infinite;
+`;
+
 interface ButtonProps {
-  label: string;
+  label?: string;
+  disabled?: boolean;
+  btnLoader?: boolean;
 }
 
-const Button = ({ label }: ButtonProps) => {
+const Button = ({ label, disabled = false, btnLoader }: ButtonProps) => {
   const handleOnClick = () => {};
   return (
-    <ButtonStyles onClick={handleOnClick} type="submit">
-      {label}
+    <ButtonStyles
+      onClick={handleOnClick}
+      type="submit"
+      disabled={disabled}
+      isLoading={btnLoader}
+    >
+      {label && label}
+      {btnLoader && <ButtonLoader></ButtonLoader>}
     </ButtonStyles>
   );
 };

@@ -1,10 +1,13 @@
 import { ProductProps } from "@/models/product";
+import { CollectionReference, DocumentData } from "firebase/firestore";
 
 export type tableOrder = "asc" | "desc";
 
 export interface DataTableProps {
   dataTableRows: ProductProps[];
-  removeItemProductFromArray: (idsArray: string[]) => void;
+  isDataLoading: boolean;
+  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
+  handleClickEditProduct: (id: string) => void;
 }
 
 export interface EnhancedTableProps {
@@ -30,5 +33,6 @@ export interface EnhancedTableToolbarProps {
   selected: string[];
   setSelected: (idsArray: string[]) => void;
   numSelected: number;
-  removeItemProductFromArray: (idsArray: string[]) => void;
+  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
+  handleClickEditProduct: (id: string) => void;
 }

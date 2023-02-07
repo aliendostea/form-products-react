@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const HomeStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  align-content: start;
   font-size: 3rem;
+  padding: 1rem 2rem;
 `;
 
 export const AddNewProduct = styled.div`
@@ -45,10 +47,10 @@ export const AddNewProductBtn = styled.button`
 
 export const FormStyled = styled.form`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem 1rem;
 
-  & button {
-    grid-column: 1 / 4;
+  & > button {
+    grid-column: 1 / 3;
   }
 `;

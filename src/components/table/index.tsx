@@ -10,15 +10,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { ThemeProvider } from "@mui/material";
 import EnhancedTableHead from "./EnhancedTableHead";
+import EnhancedTableToolbar from "./EnhancedTableToolbar";
 import { FigureStyled, TableParentStyled, themeDataTable } from "./TableStyled";
 import { ProductProps } from "@/models/product";
 import { DataTableProps, tableOrder } from "./models";
 import { getComparator, stableSort } from "./utilitiesTableFunction";
-import EnhancedTableToolbar from "./EnhancedTableToolbar";
+import SkeletonTableBody from "./SkeletonTableBody";
 
 export default function DataTable({
   dataTableRows,
-  removeItemProductFromArray,
+  getData,
+  handleClickEditProduct,
+  isDataLoading,
 }: DataTableProps) {
   const [order, setOrder] = useState<tableOrder>("asc");
   const [orderBy, setOrderBy] = useState<keyof ProductProps>("name");
@@ -92,7 +95,8 @@ export default function DataTable({
           selected={selected}
           setSelected={setSelected}
           numSelected={selected.length}
-          removeItemProductFromArray={removeItemProductFromArray}
+          getData={getData}
+          handleClickEditProduct={handleClickEditProduct}
         />
         <TableContainer>
           <Table
@@ -114,7 +118,6 @@ export default function DataTable({
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  /*  console.log("row", row); */
 
                   return (
                     <TableRow
@@ -173,6 +176,7 @@ export default function DataTable({
                     </TableRow>
                   );
                 })}
+
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -183,6 +187,13 @@ export default function DataTable({
                 </TableRow>
               )}
             </TableBody>
+            {isDataLoading && dataTableRows.length === 0 && (
+              <>
+                <SkeletonTableBody id="one" />
+                <SkeletonTableBody id="two" />
+                <SkeletonTableBody id="three" />
+              </>
+            )}
           </Table>
         </TableContainer>
         <TablePagination

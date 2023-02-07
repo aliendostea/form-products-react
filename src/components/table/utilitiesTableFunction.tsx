@@ -22,9 +22,9 @@ export function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export function stableSort<T>(
-  array: readonly T[],
-  comparator: (a: T, b: T) => number
+export function stableSort<ProductProps>(
+  array: readonly ProductProps[],
+  comparator: (a: ProductProps, b: ProductProps) => number
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {

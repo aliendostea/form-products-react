@@ -41,17 +41,17 @@ export const ContainerGrid = styled.div`
   display: grid;
   ${gridTemplateColumns1}
   grid-template-rows: 9rem minmax(55rem, 1fr);
-  gap: 7rem;
   padding-bottom: 2rem;
   background-color: var(--color-primary);
 `;
 
 export const BoxContainer = styled.div`
   grid-column: center-start / center-end;
+  grid-row: 2 / 3;
   display: grid;
   grid-template-columns: 1fr;
   /* grid-template-rows: minmax(10rem, 1fr); */
   justify-items: center;
+  align-self: start;
   align-items: start;
-  padding-top: 1rem;
 `;

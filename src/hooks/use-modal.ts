@@ -8,7 +8,7 @@ const useModal = () => {
   const removeElAnimation = () => {
     gsap.to(modalRef.current, {
       opacity: 0,
-      x: -50,
+      y: -50,
       onComplete: () => setIsModalActive(false),
     });
   };

@@ -1,6 +1,5 @@
 import { device } from "@/styles";
 import styled from "styled-components";
-/* import { ButtonStyles } from "../button/Button.style"; */
 
 export const ModalStyle = styled.div`
   height: 100%;
@@ -9,7 +8,7 @@ export const ModalStyle = styled.div`
   grid-template-rows: min-content;
   justify-content: center;
   align-content: center;
-  backdrop-filter: saturate(91%) blur(6px);
+  /* backdrop-filter: saturate(91%) blur(6px); */
   position: relative;
   z-index: 11;
 `;

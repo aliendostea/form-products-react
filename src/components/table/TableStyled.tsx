@@ -11,9 +11,10 @@ export const TableParentStyled = styled.div`
   grid-column: 1/-1;
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(10rem, 86rem);
+  grid-template-columns: minmax(10rem, 1fr);
   background-color: #f6f6f6;
   border-radius: 15px;
+  box-shadow: 0 16px 15px hsla(0, 0%, 0%, 0.02);
   padding: 1rem 2rem;
 `;
 

@@ -11,7 +11,7 @@ export const CardStyled = styled.div`
   border-radius: 22px;
   transition: 0.25s ease-in-out;
   background-color: rgb(255, 255, 255);
-  box-shadow: 0px 20px 49px #0000005e;
+  box-shadow: 0px 20px 57px hsla(0, 0%, 0%, 0.18);
 `;
 
 interface CardProps {

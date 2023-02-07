@@ -42,8 +42,8 @@ body {
   margin: 0;
   color: var(--color-dark);
   scroll-behavior: smooth;
-  overflow-x: hidden;
-  background-color: var(--color-primary);
+ /*  overflow-x: hidden; */
+  background-color: rgb(234, 234, 234);
 }
 
 a {

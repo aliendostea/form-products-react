@@ -1,97 +1,66 @@
-import { useState } from "react";
-import { Button } from "@/components/button";
-import { useFormik } from "formik";
-import {
-  AddNewProduct,
-  AddNewProductBtn,
-  FormStyled,
-  HomeStyled,
-} from "./home.styled";
-import * as Yup from "yup";
-import Card from "@/components/card";
-import Textfield from "@/components/textField";
+import { useEffect, useState } from "react";
 import DataTable from "@/components/table";
 import useModal from "@/hooks/use-modal";
 import Modal from "@/components/modal";
 import AddIcon from "@mui/icons-material/Add";
+import { productsCollectionRef } from "@/config/firebase-config";
+import { useGetDataFirebase } from "@/hooks/use-request-data-firestore";
+import HomeFormInput from "./HomeFormInput";
+import { AddNewProduct, AddNewProductBtn, HomeStyled } from "./home.styled";
+import HomeEditItemForm from "./HomeEditItemForm";
 import { ProductProps } from "@/models/product";
 
-const initialValues: ProductProps = {
-  id: "789",
-  internalCode: "2332-567",
-  name: "Bombillo LED dicróico. Rosca GU10",
-  price: createCurrencyAndPrice("10.8"),
-  power: "5W",
-  description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-  available: "true",
-  discount: "20%",
-  image: "bombillo-LED-dicróico.png",
-};
-
-function createProvisionalId() {
+/* function createProvisionalId() {
   const date = new Date();
   const comb1 = date.getMilliseconds().toString();
   const comb2 = Math.random().toString(36).substring(2, 8);
   return `${comb1}-${comb2}`;
-}
-
-function createCurrencyAndPrice(price: string): string {
-  return `$${price}`;
-}
-
-export const validationSchema = Yup.object({
-  name: Yup.string().min(3, "Must be 15 characters or less").required(),
-  internalCode: Yup.string().min(3).required(),
-  price: Yup.string().min(3).required(),
-  power: Yup.string().required(),
-  description: Yup.string().required(),
-  /*  available: Yup.bool().oneOf([true], "Field must be checked"), */
-  discount: Yup.string().required(),
-  image: Yup.string().required(),
-});
+} */
 
 const Home = () => {
-  const [addedProducts, setAddedProducts] = useState<ProductProps[]>([
-    {
-      id: "1",
-      internalCode: "2332-567",
-      name: "Bombillo LED dicróico. Rosca GU10",
-      price: createCurrencyAndPrice("10.8"),
-      power: "5W",
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-      available: "true",
-      discount: "20%",
-      image: "bombillo-LED-dicróico.png",
-    },
-  ]);
-  const { values, handleChange, handleSubmit, handleBlur, touched, errors } =
-    useFormik({
-      initialValues,
-      onSubmit: (values) => {
-        const id = createProvisionalId();
-        const { price } = values;
-        const newArray = [
-          ...addedProducts,
-          { ...values, id, price: createCurrencyAndPrice(price) },
-        ];
-        setAddedProducts(newArray);
-      },
-      validationSchema,
-    });
+  const [data, getData, loading] = useGetDataFirebase();
+  const [productToEdit, setProductToEdit] = useState<ProductProps>({
+    id: "11",
+    internalCode: "111",
+    name: "name 111",
+    price: "111",
+    power: "111",
+    description: "111",
+    available: "111",
+    discount: "111",
+    image: "111",
+  });
+  const [isActiveEditProductModal, setIsActiveEditProductModal] =
+    useState(false);
   const [isModalActive, openModal, closeModal, onMouseDownModal, modalRef] =
     useModal();
-
+  //////// hay que cambiar los permisos de quien está autorizado en modificar la DDBB
   const handleCardOnClick = () => {
+    setIsActiveEditProductModal(false);
     openModal();
   };
 
-  const removeItemProductFromArray = (idsArray: string[]) => {
-    const newArrayProducts = addedProducts.filter(
+  const handleClickEditProduct = (id: string) => {
+    const [productSelected] = data.filter((product) => product.id === id);
+    setIsActiveEditProductModal(true);
+    setProductToEdit(productSelected);
+    openModal();
+  };
+
+  const removeItemProductFromArray = async (idsArray: string[]) => {
+    /*  const newArrayProducts = data.filter(
       (product) => idsArray.some((id) => product.id === id) === false
     );
+    */
+    /*  await deleteDocInDB([...idsArray, "not9999"]);
 
-    setAddedProducts(newArrayProducts);
+    getData(productsCollectionRef); */
   };
+
+  useEffect(() => {
+    getData(productsCollectionRef);
+    //// createProductsAdapter
+  }, []);
 
   return (
     <HomeStyled>
@@ -102,8 +71,10 @@ const Home = () => {
         </AddNewProductBtn>
       </AddNewProduct>
       <DataTable
-        dataTableRows={addedProducts}
-        removeItemProductFromArray={removeItemProductFromArray}
+        dataTableRows={data}
+        getData={getData}
+        handleClickEditProduct={handleClickEditProduct}
+        isDataLoading={loading}
       />
       <Modal
         isModalActive={isModalActive}
@@ -111,117 +82,14 @@ const Home = () => {
         onMouseDownModal={onMouseDownModal}
         modalRef={modalRef}
       >
-        <Card>
-          <>
-            <FormStyled onSubmit={handleSubmit} aria-label="form">
-              <Textfield
-                id="name"
-                name="name"
-                type="text"
-                value={values.name}
-                label="Product name"
-                placeholder="Product name"
-                touched={touched.name}
-                error={errors?.name}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="internalCode"
-                name="internalCode"
-                type="text"
-                label="Internal Code"
-                value={values.internalCode}
-                placeholder="InternalCode"
-                touched={touched.internalCode}
-                error={errors?.internalCode}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="price"
-                name="price"
-                type="text"
-                label="Price"
-                value={values.price}
-                placeholder="Price"
-                touched={touched.price}
-                error={errors?.price}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="power"
-                name="power"
-                type="text"
-                label="Power"
-                value={values.power}
-                placeholder="Power"
-                touched={touched.power}
-                error={errors?.power}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="description"
-                name="description"
-                type="text"
-                label="Description"
-                value={values.description}
-                placeholder="Description"
-                touched={touched.description}
-                error={errors?.description}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="available"
-                name="available"
-                type="text"
-                label="Available"
-                value={values.available}
-                placeholder="Available"
-                touched={touched.available}
-                error={errors?.available}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="discount"
-                name="discount"
-                type="text"
-                label="Discount"
-                value={values.discount}
-                placeholder="Discount"
-                touched={touched.discount}
-                error={errors?.discount}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Textfield
-                id="image"
-                name="image"
-                type="text"
-                label="Image"
-                value={values.image}
-                placeholder="Image"
-                touched={touched.image}
-                error={errors?.image}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-
-              <Button label="Add Product" />
-            </FormStyled>
-          </>
-        </Card>
+        <>
+          {isActiveEditProductModal === false && (
+            <HomeFormInput getData={getData} />
+          )}
+          {isActiveEditProductModal && (
+            <HomeEditItemForm productValues={productToEdit} getData={getData} />
+          )}
+        </>
       </Modal>
     </HomeStyled>
   );

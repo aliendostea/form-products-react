@@ -10,25 +10,22 @@ import { AddNewProduct, AddNewProductBtn, HomeStyled } from "./home.styled";
 import HomeEditItemForm from "./HomeEditItemForm";
 import { ProductProps } from "@/models/product";
 
-/* function createProvisionalId() {
-  const date = new Date();
-  const comb1 = date.getMilliseconds().toString();
-  const comb2 = Math.random().toString(36).substring(2, 8);
-  return `${comb1}-${comb2}`;
-} */
-
 const Home = () => {
   const [data, getData, loading] = useGetDataFirebase();
   const [productToEdit, setProductToEdit] = useState<ProductProps>({
-    id: "11",
-    internalCode: "111",
-    name: "name 111",
-    price: "111",
-    power: "111",
-    description: "111",
-    available: "111",
-    discount: "111",
-    image: "111",
+    id: "",
+    internalCode: "",
+    name: "",
+    price: "",
+    power: "",
+    description: "",
+    available: false,
+    discount: "",
+    image: {
+      id: "",
+      name: "",
+      route: "",
+    },
   });
   const [isActiveEditProductModal, setIsActiveEditProductModal] =
     useState(false);
@@ -46,7 +43,6 @@ const Home = () => {
     setProductToEdit(productSelected);
     openModal();
   };
-
   /*  
   const removeItemProductFromArray = async (idsArray: string[]) => {
     const newArrayProducts = data.filter(
@@ -61,7 +57,7 @@ const Home = () => {
 
   useEffect(() => {
     getData(productsCollectionRef);
-    //// createProductsAdapter
+    ////  crear createProductsAdapter
   }, []);
 
   return (

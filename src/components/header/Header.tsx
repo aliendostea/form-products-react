@@ -9,7 +9,7 @@ const Header = () => {
   const [globalState, dispatch] = useStore();
 
   const handleOnClick = () => {
-    dispatch("TOGGLE_SIDEBAR");
+    dispatch("TOGGLE_SIDEBAR", {});
   };
   return (
     <HeaderStyled>

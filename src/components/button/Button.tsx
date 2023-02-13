@@ -8,9 +8,9 @@ export const ButtonStyles = styled.button<ButtonLoaderProps>`
   &,
   &:link,
   &:visited {
-    width: 17rem;
+    width: 13rem;
     display: inline-block;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
@@ -21,7 +21,7 @@ export const ButtonStyles = styled.button<ButtonLoaderProps>`
     -ms-user-select: none;
     user-select: none;
     color: white;
-    padding: 25px 10px;
+    padding: 17px 9px;
     border: none;
     border-radius: 11px;
     background-color: var(--color-primary);
@@ -45,7 +45,7 @@ export const ButtonStyles = styled.button<ButtonLoaderProps>`
     ${({ isLoading }) =>
       isLoading
         ? css`
-            padding: 19px 10px;
+            padding: 13px 9px;
             filter: brightness(92%);
             cursor: not-allowed;
 

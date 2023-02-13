@@ -9,11 +9,15 @@ interface TextfieldProps {
   type?: string;
   error: string | undefined;
   touched: boolean | undefined;
-  onBlur: (e: React.FocusEvent<any, Element>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const InputStyled = styled.input`
+interface InputStyledProps {
+  isError: string | boolean | undefined;
+}
+
+export const InputStyled = styled.input<InputStyledProps>`
   width: 100%;
   display: inline-block;
   font-family: "Cairo", sans-serif;
@@ -29,6 +33,11 @@ export const InputStyled = styled.input`
   padding: 0 1.8rem 0 1.2rem;
   resize: none;
   transition: all 0.3s ease-in-out;
+
+  ${({ isError }) =>
+    isError
+      ? "border: 2px solid var(--color-red);"
+      : "border: 2px solid #e0e0e0;"};
 
   &:focus {
     outline: none;
@@ -50,9 +59,8 @@ interface LabelStyledProps {
 export const LabelStyled = styled.label<LabelStyledProps>`
   display: block;
   font-size: 1.35rem;
-  margin-bottom: 0.5rem;
   font-weight: 600;
-  /*   color: ${({ touched }) => (touched ? "red" : "blue")}; */
+  margin-bottom: 0.5rem;
 
   &--error {
     color: #c12626;
@@ -63,7 +71,7 @@ export const SpanErrorStyled = styled.div`
   display: inline-block;
   font-size: 1.2rem;
   color: #c12626;
-  margin-top: 0.5rem;
+  margin-top: 2px;
 `;
 
 const Textfield = ({
@@ -78,7 +86,7 @@ const Textfield = ({
       <LabelStyled touched={touched} htmlFor={name}>
         {label}
       </LabelStyled>
-      <InputStyled name={name} {...props} />
+      <InputStyled name={name} {...props} isError={error && touched} />
 
       {error && touched && <SpanErrorStyled>{error}</SpanErrorStyled>}
     </BoxStyled>

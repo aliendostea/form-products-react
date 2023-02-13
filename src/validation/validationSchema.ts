@@ -6,7 +6,7 @@ export const validationSchema = Yup.object({
   price: Yup.string().min(3).required(),
   power: Yup.string().required(),
   description: Yup.string().required(),
-  /*  available: Yup.bool().oneOf([true], "Field must be checked"), */
+  available: Yup.bool().oneOf([true, false], "Field must be checked"),
   discount: Yup.string().required(),
-  image: Yup.string().required(),
+  image: Yup.mixed(),
 });

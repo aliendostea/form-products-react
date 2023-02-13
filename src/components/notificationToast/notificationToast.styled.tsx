@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const animationStart = keyframes`
     0% {
@@ -13,7 +13,11 @@ const animationStart = keyframes`
   }
 `;
 
-export const ToastStyled = styled.div`
+interface ToastStyledProps {
+  isError: boolean;
+}
+
+export const ToastStyled = styled.div<ToastStyledProps>`
   height: 7rem;
   display: grid;
   grid-template-columns: 3.9rem 1fr 3.5rem;
@@ -30,7 +34,9 @@ export const ToastStyled = styled.div`
   position: absolute;
   top: 110px;
   right: -329px;
-  z-index: 99;
+  position: fixed;
+  right: 38px;
+  z-index: 1000;
 
   & > p:nth-child(2) {
     font-size: 1.5rem;
@@ -44,7 +50,16 @@ export const ToastStyled = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: #61eca4;
+    background-color: var(--color-green);
+
+    ${({ isError }) =>
+      isError
+        ? css`
+            background-color: var(--color-red);
+          `
+        : css`
+            background-color: var(--color-green);
+          `};
   }
 `;
 

@@ -1,19 +1,12 @@
 import { useState } from "react";
-import { db } from "@/config/firebase-config";
 import { ProductProps } from "@/models/product";
-import {
-  CollectionReference,
-  DocumentData,
-  getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  writeBatch,
-} from "firebase/firestore";
+import { CollectionReference, DocumentData, getDocs } from "firebase/firestore";
 import { createProductsAdapter } from "@/adapters/productsAdapter";
+import { useStore } from "@/store/store";
 
 export const useGetDataFirebase = () => {
   const [data, setData] = useState<ProductProps[]>([]);
+  const [, dispatch] = useStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -39,6 +32,8 @@ export const useGetDataFirebase = () => {
       );
 
       setData(product);
+      dispatch("SET_PRODUCTS", product);
+
       setLoading(false);
     } catch (error: any) {
       console.log("error", error);
@@ -49,32 +44,7 @@ export const useGetDataFirebase = () => {
   return [data, getData, loading, error] as const;
 };
 
-export const useAddDataFirebase = () => {
-  const [isAdded, setIsAdded] = useState(false);
-  const [loadingAddDocToDB, setLoadingAddDocToDB] = useState(false);
-
-  const addDocToDB = async (
-    collection: CollectionReference<DocumentData>,
-    product: ProductProps
-  ) => {
-    setLoadingAddDocToDB(true);
-    try {
-      await addDoc(collection, product);
-
-      /*  console.log("res", res);
-      console.log("res.id", res.id); */
-      setIsAdded(true);
-      setLoadingAddDocToDB(false);
-    } catch (error) {
-      console.log("error", error);
-      setLoadingAddDocToDB(false);
-      setIsAdded(false);
-    }
-  };
-  return [isAdded, addDocToDB, loadingAddDocToDB] as const;
-};
-
-export const useUpdateDataFirebase = () => {
+/* export const useUpdateDataFirebase = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [loadingUpdateDoc, setLoadingUpdate] = useState(false);
 
@@ -108,20 +78,12 @@ export const useDeleteDataFirebase = () => {
         return productToDelete;
       });
 
-      /*  const productsToDelete2 = productsToDelete.map((product) => {
-        batch.delete(product);
-      }); */
       for (const product of productsToDelete) {
         batch.delete(product);
       }
 
       await batch.commit();
 
-      /*   const productToDelete = doc(db, "products", idProduct);
-      console.log("productToDelete", productToDelete);
-      batch.delete(productToDelete);
-
-      await batch.commit(); */
 
       setIsItemDeleted(true);
       setLoadingItemDeleted(false);
@@ -132,4 +94,4 @@ export const useDeleteDataFirebase = () => {
     }
   };
   return [isItemDeleted, deleteDocInDB, loadingItemDeleted] as const;
-};
+}; */

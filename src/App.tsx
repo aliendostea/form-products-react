@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Header } from "./components/header";
 import { Sidebar } from "./components/sidebar";
 import { Home } from "./pages";
-import configureLayoutStore from "./store/layout";
+import configureLayoutStore, { configureProductsStore } from "./store/layout";
 import { useStore } from "./store/store";
 import { GlobalStyles } from "./styles";
 
@@ -12,15 +12,17 @@ interface ContainerProps {
 }
 
 configureLayoutStore();
+configureProductsStore();
 
 export const ContainerGrid = styled.div<ContainerProps>`
   display: grid;
   grid-template-areas:
     "sidebar boxHeader boxHeader"
     "sidebar boxContent boxContent";
-  grid-template-rows: 8rem minmax(62rem, calc(100vh - 8rem));
+  /*  grid-template-rows: 8rem minmax(62rem, calc(100vh - 8rem));
   -ms-grid-rows: 8rem minmax(62rem, calc(100dvh - 8rem));
-  grid-template-rows: 8rem minmax(62rem, calc(100dvh - 8rem));
+  grid-template-rows: 8rem minmax(62rem, calc(100dvh - 8rem)); */
+  grid-template-rows: 8rem minmax(62rem, 1fr);
   column-gap: 2rem;
   transition: all 0.2s ease-in-out;
   ${(props) =>

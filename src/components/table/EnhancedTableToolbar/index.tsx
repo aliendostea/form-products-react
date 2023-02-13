@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -7,8 +8,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { EnhancedTableToolbarProps } from "../models";
 import useModal from "@/hooks/use-modal";
+import { useDeleteDataFirebase } from "@/hooks/deleteData/use-delete-data";
 import { productsCollectionRef } from "@/config/firebase-config";
-import { useDeleteDataFirebase } from "@/hooks/use-request-data-firestore";
 import Modal from "../../modal";
 import Card from "../../card";
 import {
@@ -20,7 +21,7 @@ import {
   ParentToolbar,
 } from "./EnhancedTableToolbar.styled";
 import { NotificationToast } from "@/components/notificationToast";
-import { useState } from "react";
+import { TitleStyled } from "@/components/title";
 
 export default function EnhancedTableToolbar({
   selected,
@@ -29,13 +30,13 @@ export default function EnhancedTableToolbar({
   getData,
   handleClickEditProduct,
 }: EnhancedTableToolbarProps) {
-  const [, deleteDocInDB, loadingItemDeleted] = useDeleteDataFirebase();
+  const [deleteDocInDB, loadingItemDeleted, isError] = useDeleteDataFirebase();
   const [isToastActive, setIsToastActive] = useState(false);
   const [isModalActive, openModal, closeModal, onMouseDownModal, modalRef] =
     useModal();
 
-  const handleOnClickDeleteItem22 = async () => {
-    await deleteDocInDB([...selected, "not9999"]);
+  const handleOnClickDeleteItem = async () => {
+    await deleteDocInDB([...selected]);
 
     getData(productsCollectionRef);
     setIsToastActive(true);
@@ -62,14 +63,7 @@ export default function EnhancedTableToolbar({
           {numSelected} item selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Products
-        </Typography>
+        <TitleStyled>Products</TitleStyled>
       )}
 
       {numSelected === 1 && (
@@ -135,7 +129,7 @@ export default function EnhancedTableToolbar({
                   <BtnModal
                     bg="#e37844"
                     color="#f4f4f4"
-                    onClick={handleOnClickDeleteItem22}
+                    onClick={handleOnClickDeleteItem}
                   >
                     Delete
                   </BtnModal>
@@ -144,16 +138,19 @@ export default function EnhancedTableToolbar({
                   <BtnModal
                     bg="#aa5b34"
                     color="#f4f4f4"
-                    onClick={handleOnClickDeleteItem22}
+                    onClick={handleOnClickDeleteItem}
                   >
                     <ButtonLoader></ButtonLoader>
                   </BtnModal>
                 )}
               </ParenBtnModal>
             </div>
+
             <NotificationToast
-              title="Productos Eliminados correctamente"
+              title="Productos eliminados correctamente"
               isToastActive={isToastActive}
+              errorTitle="Error eliminando producto"
+              isErrorActive={isError}
               setIsToastActive={setIsToastActive}
             />
           </ParentBodyModal>

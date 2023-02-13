@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
   --color-ligth: aliceblue;
   --color-dark: #14103D;
   --color-red: #db5151;
+  --color-green: #61eca4;
   --border-radius-1: 7px;
   --brightness-1: brightness(88%);
 }

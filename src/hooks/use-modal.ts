@@ -15,14 +15,12 @@ const useModal = () => {
 
   const onMouseDownModal = (e: any) => {
     if (e.target.className?.animVal !== undefined) return;
-    if (e.target.attributes[0]?.value === "cell") return;
 
-    const isDatePicker: string =
-      e.target.className.toLowerCase().includes("css") ||
-      e.target.className.toLowerCase().includes("mui");
+    const toast = document.querySelector("#toast-box");
 
-    if (isDatePicker) return;
+    if (e.target.id === "toast-box" || toast?.contains(e.target)) return;
     if (modalRef.current?.contains(e.target)) return;
+
     removeElAnimation();
   };
   const openModal = () => {

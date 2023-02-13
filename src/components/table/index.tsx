@@ -11,11 +11,16 @@ import Switch from "@mui/material/Switch";
 import { ThemeProvider } from "@mui/material";
 import EnhancedTableHead from "./EnhancedTableHead";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
-import { FigureStyled, TableParentStyled, themeDataTable } from "./TableStyled";
+import {
+  SpanCellAvailable,
+  TableParentStyled,
+  themeDataTable,
+} from "./TableStyled.styled";
 import { ProductProps } from "@/models/product";
 import { DataTableProps, tableOrder } from "./models";
 import { getComparator, stableSort } from "./utilitiesTableFunction";
 import SkeletonTableBody from "./SkeletonTableBody";
+import { ProductPicture } from "../productPicture";
 
 export default function DataTable({
   dataTableRows,
@@ -150,7 +155,7 @@ export default function DataTable({
                         <span>{row.name}</span>
                       </TableCell>
                       <TableCell align="left">
-                        <span>{row.price}</span>
+                        <span>${row.price}</span>
                       </TableCell>
                       <TableCell align="left">
                         <span>{row.power}</span>
@@ -159,19 +164,18 @@ export default function DataTable({
                         <span>{row.description}</span>
                       </TableCell>
                       <TableCell align="left">
-                        <span>{row.discount}</span>
+                        <span>{row.discount}%</span>
                       </TableCell>
                       <TableCell align="left">
-                        <FigureStyled>
-                          <img
-                            src={"./img/bom-1.png"}
-                            alt={row.name}
-                            loading="lazy"
-                          />
-                        </FigureStyled>
+                        <ProductPicture
+                          srcRoute={row?.image?.route}
+                          imgAlt={row.name}
+                        />
                       </TableCell>
                       <TableCell align="left">
-                        <span>{row.available}</span>
+                        <SpanCellAvailable isAvailable={row.available}>
+                          {row.available ? "Disponible" : "No disponible"}
+                        </SpanCellAvailable>
                       </TableCell>
                     </TableRow>
                   );

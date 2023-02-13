@@ -85,7 +85,7 @@ const Sidebar = () => {
             </SideBarTitleSpan>
           </SidebarHorizBtn>
         </SidebarLi>
-        <SidebarLi>
+        {/*   <SidebarLi>
           <SidebarHorizBtn
             onClick={handleOnClick2}
             isActive={stateButtons.BUTTON_2}
@@ -118,7 +118,7 @@ const Sidebar = () => {
               Eliminados
             </SideBarTitleSpan>
           </SidebarHorizBtn>
-        </SidebarLi>
+        </SidebarLi> */}
       </SidebarUl>
     </SidebarStyled>
   );

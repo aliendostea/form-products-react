@@ -72,7 +72,7 @@ export const ParentToolbar = styled.div<ParentToolbarProps>`
   display: grid;
   grid-template-columns: 1fr 6rem 6rem;
   align-items: center;
-  padding: 1rem 0 1rem 2rem;
+  padding: 0 0 1rem 2rem;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;

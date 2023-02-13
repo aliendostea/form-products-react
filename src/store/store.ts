@@ -1,13 +1,19 @@
+import { ProductProps } from "@/models/product";
 import { useState, useEffect } from "react";
 
 //// FIX INTERCEFA TYPEEEESS!!!!
 
 export interface InitialStoreProps {
+  dataProducts: ProductProps;
   isSidebarOpen: boolean;
 }
 
 interface UserActionsProps {
-  TOGGLE_SIDEBAR: (currentState: InitialStoreProps) => void;
+  SET_PRODUCTS?: (
+    currentState: InitialStoreProps,
+    products: ProductProps[]
+  ) => void;
+  TOGGLE_SIDEBAR?: (currentState: InitialStoreProps) => void;
 }
 
 let globalState: any = {};
@@ -17,8 +23,8 @@ let actions: any = {};
 export const useStore = () => {
   const [, setGlobalState] = useState(globalState);
 
-  const dispatch = (actionIdentifier: any) => {
-    const newState = actions[actionIdentifier](globalState);
+  const dispatch = (actionIdentifier: string, payload: any) => {
+    const newState = actions[actionIdentifier](globalState, payload);
     globalState = { ...globalState, ...newState };
 
     for (const listener of listeners) {

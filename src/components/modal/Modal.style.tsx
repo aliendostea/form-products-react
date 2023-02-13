@@ -49,25 +49,22 @@ export const ModalParent = styled.div`
 `;
 
 export const BtnClose = styled.button`
-  width: 4rem;
-  height: 4rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
-  color: var(--color-ligth);
+  color: rgb(255, 255, 255);
   justify-content: center;
   background-color: transparent;
-  position: absolute;
-  top: 19px;
-  right: -6vw;
+  position: fixed;
+  top: 17px;
+  right: 16px;
   z-index: 10;
   transition: 0.3s ease-in-out;
 
-  ${device.betweenPcAndTabPort} {
-    right: -63px;
-  }
   ${device.phone} {
-    right: -14px;
-    top: 4px;
+    top: 46px;
+    right: 5px;
   }
 
   & svg {
@@ -76,5 +73,6 @@ export const BtnClose = styled.button`
   }
   &:hover {
     transform: translateY(-3px);
+    color: rgb(161, 161, 161);
   }
 `;

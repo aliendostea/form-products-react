@@ -54,12 +54,12 @@ const Sidebar = () => {
     });
   };
 
-  const handleOnClick2 = () => {
+  /*  const handleOnClick2 = () => {
     dispatch({
       type: SidebarButtonOnclickActionKind.BUTTON_2,
       payload: false,
     });
-  };
+  }; */
 
   return (
     <SidebarStyled>
@@ -81,7 +81,7 @@ const Sidebar = () => {
               <img src="./img/icon-cart.png" alt="Zentec" loading="lazy" />
             </SideBarIcon>
             <SideBarTitleSpan isActive={globalState.isSidebarOpen}>
-              Cables
+              Bombillos
             </SideBarTitleSpan>
           </SidebarHorizBtn>
         </SidebarLi>
@@ -98,7 +98,7 @@ const Sidebar = () => {
               <img src="./img/icon-cart.png" alt="Zentec" loading="lazy" />
             </SideBarIcon>
             <SideBarTitleSpan isActive={globalState.isSidebarOpen}>
-              Bombillos
+              cables
             </SideBarTitleSpan>
           </SidebarHorizBtn>
         </SidebarLi>

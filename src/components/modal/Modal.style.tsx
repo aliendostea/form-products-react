@@ -41,10 +41,10 @@ export const ModalParent = styled.div`
   z-index: 100;
 
   ${device.tabPort} {
-    grid-template-columns: minmax(22rem, 44rem);
+    grid-template-columns: minmax(22rem, 57rem);
   }
   ${device.phone} {
-    grid-template-columns: minmax(32rem, calc(100vw - 4rem));
+    grid-template-columns: minmax(32rem, 1fr);
   }
 `;
 

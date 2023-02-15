@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { Header } from "./components/header";
 import { Sidebar } from "./components/sidebar";
 import { Home } from "./pages";
-import configureLayoutStore, { configureProductsStore } from "./store/layout";
+import configureLayoutStore, {
+  configureProductsStore,
+  configureSearchProductsInput,
+} from "./store/layout";
 import { useStore } from "./store/store";
-import { GlobalStyles } from "./styles";
+import { device, GlobalStyles } from "./styles";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -13,6 +16,7 @@ interface ContainerProps {
 
 configureLayoutStore();
 configureProductsStore();
+configureSearchProductsInput();
 
 export const ContainerGrid = styled.div<ContainerProps>`
   display: grid;
@@ -29,6 +33,12 @@ export const ContainerGrid = styled.div<ContainerProps>`
     props.isSidebarOpen
       ? "grid-template-columns: 23rem 1fr;"
       : "grid-template-columns: 13rem 1fr;"};
+
+  ${device.betweenPcAndTabPort2} {
+    grid-template-areas:
+      "boxHeader boxHeader"
+      "boxContent boxContent";
+  }
 `;
 
 export const BoxContent = styled.div`

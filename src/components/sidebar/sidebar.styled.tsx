@@ -1,3 +1,4 @@
+import { device } from "@/styles";
 import styled, { css } from "styled-components";
 
 interface SideBarIconProps {
@@ -21,6 +22,10 @@ export const SidebarStyled = styled.div`
   background-color: rgb(230, 230, 230);
   transition: all 0.2s ease-in-out;
   z-index: 1;
+
+  ${device.betweenPcAndTabPort2} {
+    display: none;
+  }
 `;
 
 export const LogoStyled = styled.figure`

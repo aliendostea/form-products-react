@@ -1,3 +1,4 @@
+import { device } from "@/styles";
 import styled, { css } from "styled-components";
 
 export const HomeStyled = styled.div`
@@ -52,7 +53,16 @@ export const FormStyled = styled.form`
   gap: 1.4rem 1rem;
   padding: 10px 0;
   overflow: hidden;
-  overflow-y: scroll;
+
+  ${device.tabPort} {
+    overflow-y: scroll;
+  }
+
+  ${device.phone} {
+    max-height: 53rem;
+    width: 30rem;
+    grid-template-columns: 1fr;
+  }
 
   & > button {
     grid-column: 1 / -1;
@@ -118,5 +128,10 @@ export const ImageFormEmpty = styled.figure<ImageFormEmptyProps>`
 
 export const SwitchBoxStyled = styled.div`
   grid-column: 2 / 3;
-  grid-row: 1 /2;
+  grid-row: 1 / 2;
+
+  ${device.phone} {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
 `;

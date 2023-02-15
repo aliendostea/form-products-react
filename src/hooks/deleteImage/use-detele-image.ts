@@ -11,7 +11,7 @@ export const useDeleteImageFirebase = () => {
     try {
       const desertRef = ref(storage, `lightbulbs/${product.image.id}`);
 
-      const res = await deleteObject(desertRef);
+      await deleteObject(desertRef);
     } catch (error) {
       console.log("error deleteImageDB", error);
       setLoadingDeleteImageDB(false);

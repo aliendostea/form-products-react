@@ -6,6 +6,7 @@ export type tableOrder = "asc" | "desc";
 export interface DataTableProps {
   dataTableRows: ProductProps[];
   isDataLoading: boolean;
+  isFilteringOnKeydown: boolean;
   getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
   handleClickEditProduct: (id: string) => void;
 }

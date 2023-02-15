@@ -1,3 +1,4 @@
+import { device } from "@/styles";
 import styled, { css } from "styled-components";
 
 interface BtnSidebarOpenCloseProps {
@@ -7,13 +8,26 @@ interface BtnSidebarOpenCloseProps {
 export const HeaderStyled = styled.div`
   grid-area: boxHeader;
   display: grid;
-  grid-template-columns: 5rem 7rem;
+  grid-template-columns: 5rem 0.81fr 7rem;
   justify-content: space-between;
+  align-items: center;
   padding: 0 2rem;
   border-radius: 15px;
   background-color: #e6e6e6;
   transition: all 0.2s ease-in-out;
   z-index: 5;
+
+  ${device.betweenPcAndTabPort2} {
+    grid-template-columns: 12rem 0.7fr 7rem;
+  }
+
+  & > figure {
+    display: none;
+
+    ${device.betweenPcAndTabPort2} {
+      display: flex;
+    }
+  }
 `;
 
 export const HeaderUserAvatar = styled.button`
@@ -63,5 +77,9 @@ export const BtnSidebarOpenClose = styled.button<BtnSidebarOpenCloseProps>`
     width: 1.8rem;
     opacity: 0.3;
     transition: all 0.2s ease-in-out;
+  }
+
+  ${device.betweenPcAndTabPort2} {
+    display: none;
   }
 `;

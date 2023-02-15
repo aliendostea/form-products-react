@@ -3,12 +3,23 @@ import { useState, useEffect } from "react";
 
 //// FIX INTERCEFA TYPEEEESS!!!!
 
+interface InitialSearchProps {
+  stringToSearch: string;
+  isFilteringOnKeydown: boolean;
+  dataProductsFiltered: ProductProps[] | [];
+}
+
 export interface InitialStoreProps {
-  dataProducts: ProductProps;
+  dataProducts: ProductProps[];
   isSidebarOpen: boolean;
+  searchedProduct: InitialSearchProps;
 }
 
 interface UserActionsProps {
+  SEARCH_PRODUCTS?: (
+    currentState: InitialStoreProps,
+    searchedProduct: InitialSearchProps
+  ) => void;
   SET_PRODUCTS?: (
     currentState: InitialStoreProps,
     products: ProductProps[]

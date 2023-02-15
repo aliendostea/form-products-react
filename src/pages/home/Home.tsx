@@ -9,24 +9,32 @@ import HomeFormInput from "./HomeFormInput";
 import { AddNewProduct, AddNewProductBtn, HomeStyled } from "./home.styled";
 import HomeEditItemForm from "./HomeEditItemForm";
 import { ProductProps } from "@/models/product";
+import { TestResponsive } from "@/components/testResponsive";
+import { useStore } from "@/store/store";
+
+const INITIAL_PRODUCT_DATA = {
+  id: "",
+  internalCode: "",
+  name: "",
+  price: "",
+  power: "",
+  description: "",
+  available: false,
+  discount: "",
+  image: {
+    id: "",
+    name: "",
+    route: "",
+  },
+};
 
 const Home = () => {
+  const [globalState] = useStore();
+  const { stringToSearch, isFilteringOnKeydown, dataProductsFiltered } =
+    globalState.searchedProduct;
   const [data, getData, loading] = useGetDataFirebase();
-  const [productToEdit, setProductToEdit] = useState<ProductProps>({
-    id: "",
-    internalCode: "",
-    name: "",
-    price: "",
-    power: "",
-    description: "",
-    available: false,
-    discount: "",
-    image: {
-      id: "",
-      name: "",
-      route: "",
-    },
-  });
+  const [productToEdit, setProductToEdit] =
+    useState<ProductProps>(INITIAL_PRODUCT_DATA);
   const [isActiveEditProductModal, setIsActiveEditProductModal] =
     useState(false);
   const [isModalActive, openModal, closeModal, onMouseDownModal, modalRef] =
@@ -43,6 +51,7 @@ const Home = () => {
     setProductToEdit(productSelected);
     openModal();
   };
+
   /*  
   const removeItemProductFromArray = async (idsArray: string[]) => {
     const newArrayProducts = data.filter(
@@ -60,20 +69,38 @@ const Home = () => {
     ////  crear createProductsAdapter
   }, []);
 
+  const getDataTableArray = (): ProductProps[] | [] => {
+    if (isFilteringOnKeydown === false && stringToSearch === "") {
+      return data;
+    }
+
+    if (stringToSearch !== "" && dataProductsFiltered.length > 0) {
+      return dataProductsFiltered;
+    }
+
+    return [];
+  };
+
+  const dataTableArray = getDataTableArray();
+
   return (
     <HomeStyled>
+      <TestResponsive />
       <AddNewProduct>
         <AddNewProductBtn onClick={handleCardOnClick}>
           <AddIcon />
           <span>Add product</span>
         </AddNewProductBtn>
       </AddNewProduct>
+
       <DataTable
-        dataTableRows={data}
+        dataTableRows={dataTableArray}
         getData={getData}
         handleClickEditProduct={handleClickEditProduct}
         isDataLoading={loading}
+        isFilteringOnKeydown={isFilteringOnKeydown}
       />
+
       <Modal
         isModalActive={isModalActive}
         closeModal={closeModal}

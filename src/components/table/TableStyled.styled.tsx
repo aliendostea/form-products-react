@@ -37,3 +37,28 @@ export const SpanCellAvailable = styled.span<SpanCellAvailableProps>`
           filter: brightness(70%);
         `};
 `;
+
+export const TableEmptyCells = styled.div`
+  width: 10rem;
+  height: 12rem;
+  display: grid;
+  position: relative;
+`;
+
+export const TableEmptyItemCells = styled.span`
+  display: grid;
+  grid-template-columns: min-content min-content;
+  gap: 1rem;
+  align-items: center;
+  font-size: 2.2rem;
+  color: #bdbdbd;
+  white-space: nowrap;
+  position: absolute;
+  top: 39px;
+  right: -175px;
+
+  & > figure:nth-child(1) {
+    display: inline-block;
+    width: 3rem;
+  }
+`;

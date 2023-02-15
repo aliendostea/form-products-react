@@ -13,6 +13,8 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 import {
   SpanCellAvailable,
+  TableEmptyCells,
+  TableEmptyItemCells,
   TableParentStyled,
   themeDataTable,
 } from "./TableStyled.styled";
@@ -21,12 +23,15 @@ import { DataTableProps, tableOrder } from "./models";
 import { getComparator, stableSort } from "./utilitiesTableFunction";
 import SkeletonTableBody from "./SkeletonTableBody";
 import { ProductPicture } from "../productPicture";
+import { SpinLoader } from "../spinLoader";
+import { SpinLoaderParentStyled } from "../spinLoader/SpinLoader";
 
 export default function DataTable({
   dataTableRows,
   getData,
   handleClickEditProduct,
   isDataLoading,
+  isFilteringOnKeydown,
 }: DataTableProps) {
   const [order, setOrder] = useState<tableOrder>("asc");
   const [orderBy, setOrderBy] = useState<keyof ProductProps>("name");
@@ -197,6 +202,49 @@ export default function DataTable({
                 <SkeletonTableBody id="two" />
                 <SkeletonTableBody id="three" />
               </>
+            )}
+
+            {isFilteringOnKeydown && (
+              <TableBody>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <td>
+                    <SpinLoaderParentStyled>
+                      <SpinLoader color="#3c3c3c" size="big" />
+                    </SpinLoaderParentStyled>
+                  </td>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
+            )}
+
+            {dataTableRows.length === 0 && isFilteringOnKeydown === false && (
+              <TableBody>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <td>
+                    <TableEmptyCells>
+                      <TableEmptyItemCells>
+                        <figure>
+                          <img
+                            src="./img/icons-empty-products.png"
+                            alt="Empty"
+                            loading="lazy"
+                          />
+                        </figure>
+                        No existen productos...
+                      </TableEmptyItemCells>
+                    </TableEmptyCells>
+                  </td>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
             )}
           </Table>
         </TableContainer>

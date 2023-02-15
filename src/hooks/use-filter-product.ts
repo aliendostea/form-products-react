@@ -9,7 +9,13 @@ export const useFilterProduct = () => {
 
   const filterDataFunction = () =>
     globalState.dataProducts.filter((obj: ProductProps) => {
-      return obj.name.toLowerCase().search(stringToSearch.toLowerCase()) !== -1;
+      return (
+        obj.name.toLowerCase().search(stringToSearch.toLowerCase()) !== -1 ||
+        obj.internalCode.toLowerCase().search(stringToSearch.toLowerCase()) !==
+          -1 ||
+        obj.description.toLowerCase().search(stringToSearch.toLowerCase()) !==
+          -1
+      );
     });
 
   const setDataToFilter = (stringToSearch: string) => {

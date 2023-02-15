@@ -85,7 +85,7 @@ const Home = () => {
 
   return (
     <HomeStyled>
-      <TestResponsive />
+      {import.meta.env.VITE_TEST_RESPONSIVE && <TestResponsive />}
       <AddNewProduct>
         <AddNewProductBtn onClick={handleCardOnClick}>
           <AddIcon />

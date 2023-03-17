@@ -2,20 +2,24 @@ import { useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/config/firebase-config";
 
+interface SetImageToDBPRops {
+  currentPage: string;
+  imageID: string;
+  file: Blob | Uint8Array | ArrayBuffer;
+}
+
 export const useSetImageFirebase = () => {
   const [loadingSetImageToDB, setLoadingSetImageToDB] = useState(false);
 
-  const setImageToDB = async (
-    imageID: string,
-    file: Blob | Uint8Array | ArrayBuffer
-  ) => {
+  const setImageToDB = async (props: SetImageToDBPRops) => {
     setLoadingSetImageToDB(true);
     try {
-      const imageRef = ref(storage, `lightbulbs/${imageID}`);
+      const { currentPage, imageID, file } = props;
+      const imageRef = ref(storage, `${currentPage}/${imageID}`);
       await uploadBytes(imageRef, file);
 
       const imageURL = await getDownloadURL(
-        ref(storage, `lightbulbs/${imageID}`)
+        ref(storage, `${currentPage}/${imageID}`)
       );
 
       setLoadingSetImageToDB(false);

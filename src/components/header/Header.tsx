@@ -1,40 +1,52 @@
-import { useState } from "react";
-import { useStore } from "@/store/store";
-import { LogoStyled } from "../sidebar/sidebar.styled";
+import React from "react";
+import { useFilters } from "@/hooks/use-filters";
+import { useLayout } from "@/hooks/use-layout";
+import { SearchBar } from "../textFieldSearch";
 import {
   BtnSidebarOpenClose,
+  HeaderLinesOptions,
   HeaderStyled,
   HeaderUserAvatar,
+  LogoSidebarStyled,
 } from "./header.styled";
-import SearchBar from "../textFieldSearch/TextFieldSearch";
-import { useFilterProduct } from "@/hooks/use-filter-product";
 
 const Header = () => {
-  const [globalState, dispatch] = useStore();
-  const [searchInput, setSearchInput] = useState("");
-  const [, setDataToFilter] = useFilterProduct();
+  const { state, toggleSidebar } = useLayout();
+  const { setFilters } = useFilters();
+  /*  const inputRef = useRef<HTMLDivElement | null>(null); */
+  const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const handleOnClick = () => {
-    dispatch("TOGGLE_SIDEBAR", {});
+    toggleSidebar();
   };
 
-  const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-    setDataToFilter(e.target.value);
+  //// React.ChangeEvent<HTMLInputElement>
+  const handleOnChangeSearch = () => {
+    setFilters({
+      stringToSearch: inputRef?.current?.value ?? "",
+      isFilteringOnKeydown: true,
+    });
   };
 
   const handleOnClickEmptySearchInput = () => {
-    setSearchInput("");
-    setDataToFilter("");
+    setFilters({
+      stringToSearch: "",
+      isFilteringOnKeydown: false,
+    });
+  };
+
+  const handleOnClickSidebarOnPhone = () => {
+    toggleSidebar();
   };
 
   return (
     <HeaderStyled>
-      <LogoStyled>
+      <LogoSidebarStyled>
         <img src="./img/zentec-logo.svg" alt="Zentec" loading="lazy" />
-      </LogoStyled>
+      </LogoSidebarStyled>
+
       <BtnSidebarOpenClose
-        isActive={globalState.isSidebarOpen}
+        isActive={state.isSidebarOpen}
         onClick={handleOnClick}
       >
         <figure>
@@ -47,8 +59,8 @@ const Header = () => {
       </BtnSidebarOpenClose>
 
       <SearchBar
+        ref={inputRef}
         name="searchInput"
-        value={searchInput}
         placeholder="Search product"
         onChange={handleOnChangeSearch}
         handleOnClickEmptyInput={handleOnClickEmptySearchInput}
@@ -59,6 +71,10 @@ const Header = () => {
           <img src="./img/icon-user.png" alt="User" loading="lazy" />
         </figure>
       </HeaderUserAvatar>
+
+      <HeaderLinesOptions onClick={handleOnClickSidebarOnPhone}>
+        <span></span>
+      </HeaderLinesOptions>
     </HeaderStyled>
   );
 };

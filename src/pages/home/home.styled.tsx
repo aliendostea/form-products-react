@@ -6,7 +6,7 @@ export const HomeStyled = styled.div`
   grid-template-columns: 1fr;
   align-content: start;
   font-size: 3rem;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 1rem 0;
 `;
 
 export const AddNewProduct = styled.div`
@@ -44,6 +44,12 @@ export const AddNewProductBtn = styled.button`
   &:hover {
     transform: translateY(-3px);
   }
+`;
+
+export const AddNewProductTest = styled.div`
+  height: 5rem;
+  width: 16rem;
+  background-color: rgba(58, 133, 133, 0);
 `;
 
 export const FormStyled = styled.form`

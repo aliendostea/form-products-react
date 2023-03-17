@@ -1,4 +1,4 @@
-import { fontFamily1 } from "@/styles";
+import { device, fontFamily1 } from "@/styles";
 import styled from "styled-components";
 
 export const TitleStyled = styled.span`
@@ -8,4 +8,8 @@ export const TitleStyled = styled.span`
   font-size: 2.2rem;
   line-height: 1.2;
   letter-spacing: 0.37px;
+
+  ${device.phone} {
+    line-height: 1;
+  }
 `;

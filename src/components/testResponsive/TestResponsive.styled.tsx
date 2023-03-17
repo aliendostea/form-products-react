@@ -40,7 +40,7 @@ export const ResponsiveStyle = styled.div`
   ${device.phone} {
     background-color: rgb(43, 49, 49);
     color: rgb(255, 169, 169);
-    top: 13px;
+    top: 93px;
     left: 118px;
   }
   ${device.miniPhone} {

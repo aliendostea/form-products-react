@@ -27,6 +27,7 @@ const NotificationToast = ({
   };
 
   useEffect(() => {
+    ///// error
     if (isToastActive === false) return;
 
     const idSetTimeout = setTimeout(() => {

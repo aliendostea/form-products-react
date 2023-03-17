@@ -15,4 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const productsCollectionRef = collection(db, "products");
+export const cablesRef = collection(db, "cables");
+export const lightbulbsRef = collection(db, "lightBulbs");
 export const storage = getStorage(app);

@@ -1,9 +1,19 @@
 import { device } from "@/styles";
 import styled, { css } from "styled-components";
+import { LogoStyled } from "../sidebar/sidebar.styled";
 
 interface BtnSidebarOpenCloseProps {
   isActive: boolean;
 }
+
+export const LogoSidebarStyled = styled(LogoStyled)`
+  display: none;
+
+  ${device.tabPort} {
+    display: flex;
+    justify-self: start;
+  }
+`;
 
 export const HeaderStyled = styled.div`
   grid-area: boxHeader;
@@ -17,16 +27,19 @@ export const HeaderStyled = styled.div`
   transition: all 0.2s ease-in-out;
   z-index: 5;
 
-  ${device.betweenPcAndTabPort2} {
-    grid-template-columns: 12rem 0.7fr 7rem;
+  ${device.tabPort} {
+    grid-template-columns: 12rem 1fr 5rem min-content;
+    gap: 10px;
   }
 
-  & > figure {
-    display: none;
+  ${device.phone} {
+    grid-template-columns: 7rem 0.81fr 5rem min-content;
+    gap: 3px;
+    padding: 0 1rem;
+  }
 
-    ${device.betweenPcAndTabPort2} {
-      display: flex;
-    }
+  ${device.miniPhone} {
+    grid-template-columns: 7rem 0.81fr 5rem min-content;
   }
 `;
 
@@ -38,6 +51,10 @@ export const HeaderUserAvatar = styled.button`
   background-color: #d1d1d1;
   border-radius: 50%;
   overflow: hidden;
+
+  ${device.tabPort} {
+    justify-self: center;
+  }
 
   & > figure:nth-child(1) {
     width: 4rem;
@@ -79,7 +96,61 @@ export const BtnSidebarOpenClose = styled.button<BtnSidebarOpenCloseProps>`
     transition: all 0.2s ease-in-out;
   }
 
-  ${device.betweenPcAndTabPort2} {
+  ${device.tabPort} {
     display: none;
+  }
+`;
+
+export const HeaderLinesOptions = styled.button`
+  display: none;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  background-color: #dcdcdc;
+
+  ${device.tabPort} {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  & span {
+    width: 2rem;
+    height: 3px;
+    display: inline-block;
+    background-color: var(--color-primary);
+    border-radius: 9px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 2rem;
+      height: 3px;
+      display: inline-block;
+      background-color: var(--color-primary);
+      border-radius: 9px;
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+      top: 6px;
+      right: 0;
+    }
+
+    &::after {
+      top: -6px;
+    }
+  }
+
+  &:hover span::before {
+    transform: translateY(-1px);
+  }
+  &:hover span::after {
+    transform: translateY(1px);
   }
 `;

@@ -1,37 +1,34 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import { Button } from "@/components/button";
 import Card from "@/components/card";
-import { NotificationToast } from "@/components/notificationToast";
+import { validationSchemaCables } from "@/validation/validationSchema";
 import Textfield, {
   LabelStyled,
   SpanErrorStyled,
 } from "@/components/textField";
+import { useGetData } from "@/hooks/use-get-data";
 import Switch from "@mui/material/Switch";
-import { useUpdateDataFirebase } from "@/hooks/updateData/use-update-data";
-import { validationSchema } from "@/validation/validationSchema";
 import {
+  Button,
   FormBoxImgs,
   FormStyled,
   ImageFormSelected,
+  InputFiles,
+  NotificationToast,
   SwitchBoxStyled,
-} from "./home.styled";
-import { productsCollectionRef } from "@/config/firebase-config";
-import { CollectionReference, DocumentData } from "firebase/firestore";
-import { ProductProps } from "@/models/product";
-import { TitleStyled } from "@/components/title";
+  TitleStyled,
+} from "@/components";
+import { useUpdateDataFirebase } from "@/hooks/updateData/use-update-data";
 import { InputFilesImageProps } from "@/models/form";
-import { InputFiles } from "@/components/inputFiles";
+import { ProductCablesProps } from "@/models/product";
 
 interface HomeEditItemFormProps {
-  productValues: ProductProps;
-  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
+  productValues: ProductCablesProps;
 }
 
-const HomeEditItemForm = ({
-  productValues,
-  getData,
-}: HomeEditItemFormProps) => {
+const EditCablesForm = ({ productValues }: HomeEditItemFormProps) => {
+  const [getData] = useGetData();
+
   const [isToastActive, setIsToastActive] = useState(false);
   const [emptyFileInputError, setEmptyFileInputError] = useState(false);
   const [updateDocToDB, loadingUpdateDoc, isError] = useUpdateDataFirebase();
@@ -45,15 +42,16 @@ const HomeEditItemForm = ({
       initialValues: productValues,
       onSubmit: async (productValues) => {
         await updateDocToDB(
+          "cables",
           productValues,
           inputFilesImage.file,
           inputFilesImage.objectURL === ""
         );
 
-        getData(productsCollectionRef);
+        getData();
         setIsToastActive(true);
       },
-      validationSchema,
+      validationSchema: validationSchemaCables,
     });
 
   const handleOnChangeInputFiles = async (
@@ -163,14 +161,14 @@ const HomeEditItemForm = ({
           />
 
           <Textfield
-            id="power"
-            name="power"
+            id="caliber"
+            name="caliber"
             type="text"
-            label="Power"
-            value={values?.power}
-            placeholder="Power"
-            touched={touched.power}
-            error={errors?.power}
+            label="Caliber"
+            value={values?.caliber}
+            placeholder="Caliber"
+            touched={touched.caliber}
+            error={errors?.caliber}
             onBlur={handleBlur}
             onChange={handleChange}
           />
@@ -217,4 +215,4 @@ const HomeEditItemForm = ({
   );
 };
 
-export default HomeEditItemForm;
+export default EditCablesForm;

@@ -9,9 +9,8 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { EnhancedTableToolbarProps } from "../models";
 import useModal from "@/hooks/use-modal";
 import { useDeleteDataFirebase } from "@/hooks/deleteData/use-delete-data";
-import { productsCollectionRef } from "@/config/firebase-config";
-import Modal from "../../modal";
 import Card from "../../card";
+import { useGetData } from "@/hooks/use-get-data";
 import {
   BtnModal,
   ButtonLoader,
@@ -22,23 +21,29 @@ import {
 } from "./EnhancedTableToolbar.styled";
 import { NotificationToast } from "@/components/notificationToast";
 import { TitleStyled } from "@/components/title";
+import { Modal } from "@/components/modal";
 
 export default function EnhancedTableToolbar({
+  currentPage,
+  title,
   selected,
   setSelected,
   numSelected,
-  getData,
   handleClickEditProduct,
 }: EnhancedTableToolbarProps) {
+  const [getData] = useGetData();
   const [deleteDocInDB, loadingItemDeleted, isError] = useDeleteDataFirebase();
   const [isToastActive, setIsToastActive] = useState(false);
   const [isModalActive, openModal, closeModal, onMouseDownModal, modalRef] =
     useModal();
 
   const handleOnClickDeleteItem = async () => {
-    await deleteDocInDB([...selected]);
+    await deleteDocInDB({
+      productsIDs: [...selected],
+      currentPage: currentPage,
+    });
 
-    getData(productsCollectionRef);
+    getData();
     setIsToastActive(true);
     setSelected([]);
   };
@@ -63,7 +68,7 @@ export default function EnhancedTableToolbar({
           {numSelected} item selected
         </Typography>
       ) : (
-        <TitleStyled>Products</TitleStyled>
+        <TitleStyled> {title} </TitleStyled>
       )}
 
       {numSelected === 1 && (

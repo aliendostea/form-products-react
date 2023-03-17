@@ -1,101 +1,56 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import { CollectionReference, DocumentData } from "firebase/firestore";
-import { validationSchema } from "@/validation/validationSchema";
-import { Button } from "@/components/button";
 import Card from "@/components/card";
-import { NotificationToast } from "@/components/notificationToast";
+import { validationSchemaLightBulbs } from "@/validation/validationSchema";
 import Textfield, {
   LabelStyled,
   SpanErrorStyled,
 } from "@/components/textField";
-import { ProductProps } from "@/models/product";
-import { productsCollectionRef } from "@/config/firebase-config";
-import { createProvisionalId } from "@/utilities/utilitiesFunctions";
+import { useGetData } from "@/hooks/use-get-data";
 import Switch from "@mui/material/Switch";
-import { InputFiles } from "@/components/inputFiles";
 import {
+  Button,
   FormBoxImgs,
   FormStyled,
-  ImageFormEmpty,
   ImageFormSelected,
+  InputFiles,
+  NotificationToast,
   SwitchBoxStyled,
-} from "./home.styled";
-import { useSetDataFirebase } from "@/hooks/setData/use-set-data";
-import { TitleStyled } from "@/components/title";
+  TitleStyled,
+} from "@/components";
+import { useUpdateDataFirebase } from "@/hooks/updateData/use-update-data";
 import { InputFilesImageProps } from "@/models/form";
+import { ProductLightBulbsProps } from "@/models/product";
 
-const initialValues: ProductProps = {
-  internalCode: "",
-  name: "",
-  price: "",
-  power: "",
-  description: "",
-  available: false,
-  discount: "",
-  image: {
-    id: "",
-    name: "",
-    route: "",
-  },
-};
-
-interface HomeFormInputProps {
-  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
+interface HomeEditItemFormProps {
+  productValues: ProductLightBulbsProps;
 }
 
-const HomeFormInput = ({ getData }: HomeFormInputProps) => {
+const EditBulbsForm = ({ productValues }: HomeEditItemFormProps) => {
+  const [getData] = useGetData();
   const [isToastActive, setIsToastActive] = useState(false);
   const [emptyFileInputError, setEmptyFileInputError] = useState(false);
+  const [updateDocToDB, loadingUpdateDoc, isError] = useUpdateDataFirebase();
   const [inputFilesImage, setInputFilesImage] = useState<InputFilesImageProps>({
     objectURL: "",
     file: new Uint8Array([0, 0, 0, 0, 0]),
   });
-  const [setDocToDB, loadingSetDocToDB, isError] = useSetDataFirebase();
 
   const { values, handleChange, handleSubmit, handleBlur, touched, errors } =
     useFormik({
-      initialValues,
-      onSubmit: async (values: ProductProps) => {
-        if (inputFilesImage.objectURL === "") {
-          setEmptyFileInputError(true);
-          return;
-        }
-        /*  const imageObj = new Map<string, string>( [
-          ['id', ''],
-          ['name', ''],
-          ['route', ''],
-        ]); */
-
-        /*  imageObj.set("id", `bulb-${cloneOfName}-${createProvisionalId()}`);
-        imageObj.set("name", values.name);
-        imageObj.set("route", ""); */
-        const cloneOfProduct = structuredClone(values);
-        const cloneOfName = cloneOfProduct.name.replaceAll(" ", "-");
-
-        await setDocToDB(
-          productsCollectionRef,
-          {
-            internalCode: values.internalCode,
-            name: values.name,
-            price: values.price,
-            power: values.power,
-            description: values.description,
-            available: values.available,
-            discount: values.discount,
-            image: {
-              id: `bulb-${cloneOfName}-${createProvisionalId()}`,
-              name: values.name,
-              route: "",
-            }, ///// arreglar esto, esta vacio, no deberia ser así
-          },
-          inputFilesImage.file
+      initialValues: productValues,
+      onSubmit: async (productValues) => {
+        await updateDocToDB(
+          "lightBulbs",
+          productValues,
+          inputFilesImage.file,
+          inputFilesImage.objectURL === ""
         );
 
-        getData(productsCollectionRef);
+        getData();
         setIsToastActive(true);
       },
-      validationSchema,
+      validationSchema: validationSchemaLightBulbs,
     });
 
   const handleOnChangeInputFiles = async (
@@ -106,7 +61,6 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
         objectURL: URL.createObjectURL(e.target.files[0]),
         file: e.target.files[0],
       };
-
       setInputFilesImage(uploadImg);
       setEmptyFileInputError(false);
     }
@@ -115,26 +69,28 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
   return (
     <Card>
       <>
-        <TitleStyled>Add products</TitleStyled>
+        <TitleStyled>Edit products</TitleStyled>
         <FormStyled onSubmit={handleSubmit} aria-label="form">
           <FormBoxImgs>
             <InputFiles
               id="user-files"
               name="image"
-              value={values.image.name}
+              value=""
               placeholder="Select Image"
-              touched={touched.image?.name}
+              touched={touched?.image?.name}
               error={errors?.image?.name}
               onBlur={handleBlur}
               onChange={handleOnChangeInputFiles}
             />
-            {inputFilesImage.objectURL === "" ? (
-              <ImageFormEmpty error={emptyFileInputError}>
-                <img src="./img/icon-add-files.png" alt="Select image" />
-              </ImageFormEmpty>
-            ) : (
+
+            {inputFilesImage.objectURL !== "" && (
               <ImageFormSelected>
                 <img src={inputFilesImage.objectURL} alt="Select image" />
+              </ImageFormSelected>
+            )}
+            {inputFilesImage.objectURL === "" && (
+              <ImageFormSelected>
+                <img src={values?.image.route} alt="Select image" />
               </ImageFormSelected>
             )}
             {emptyFileInputError && (
@@ -168,7 +124,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             id="name"
             name="name"
             type="text"
-            value={values.name}
+            value={values?.name}
             label="Product name"
             placeholder="Product name"
             touched={touched.name}
@@ -182,7 +138,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             name="internalCode"
             type="text"
             label="Internal Code"
-            value={values.internalCode}
+            value={values?.internalCode}
             placeholder="InternalCode"
             touched={touched.internalCode}
             error={errors?.internalCode}
@@ -195,7 +151,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             name="price"
             type="text"
             label="Price"
-            value={values.price}
+            value={values?.price}
             placeholder="Price"
             touched={touched.price}
             error={errors?.price}
@@ -208,7 +164,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             name="power"
             type="text"
             label="Power"
-            value={values.power}
+            value={values?.power}
             placeholder="Power"
             touched={touched.power}
             error={errors?.power}
@@ -221,7 +177,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             name="description"
             type="text"
             label="Description"
-            value={values.description}
+            value={values?.description}
             placeholder="Description"
             touched={touched.description}
             error={errors?.description}
@@ -234,7 +190,7 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             name="discount"
             type="text"
             label="Discount"
-            value={values.discount}
+            value={values?.discount}
             placeholder="Discount"
             touched={touched.discount}
             error={errors?.discount}
@@ -242,12 +198,13 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
             onChange={handleChange}
           />
 
-          {loadingSetDocToDB === false && <Button label="Add Product" />}
-          {loadingSetDocToDB && <Button btnLoader={true} disabled={true} />}
+          {loadingUpdateDoc === false && <Button label="Edit Product" />}
+          {loadingUpdateDoc && <Button btnLoader={true} disabled={true} />}
+
           <NotificationToast
-            title="Producto creado correctamente"
+            title="Producto editado correctamente"
             isToastActive={isToastActive}
-            errorTitle="Error subiendo producto"
+            errorTitle="Error editando producto"
             isErrorActive={isError}
             setIsToastActive={setIsToastActive}
           />
@@ -257,4 +214,4 @@ const HomeFormInput = ({ getData }: HomeFormInputProps) => {
   );
 };
 
-export default HomeFormInput;
+export default EditBulbsForm;

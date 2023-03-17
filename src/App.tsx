@@ -1,65 +1,44 @@
-import styled from "styled-components";
 import { Header } from "./components/header";
 import { Sidebar } from "./components/sidebar";
-import { Home } from "./pages";
-import configureLayoutStore, {
-  configureProductsStore,
-  configureSearchProductsInput,
-} from "./store/layout";
-import { useStore } from "./store/store";
-import { device, GlobalStyles } from "./styles";
+import { LayoutContainer } from "./pages";
+import { BoxContent, ContainerGrid, GlobalStyles } from "./styles";
+import { ProductsProvider } from "./store/context/productsContext.jsx";
+import { FiltersProvider } from "./store/context/filtersContext";
+import { LayoutProvider } from "./store/context/layoutContext";
+import { useLayout } from "./hooks/use-layout";
+import { TestResponsive } from "./components";
 
-interface ContainerProps {
-  children: React.ReactNode;
-  isSidebarOpen: boolean;
+interface ContainerLayoutProps {
+  children: JSX.Element[];
 }
 
-configureLayoutStore();
-configureProductsStore();
-configureSearchProductsInput();
-
-export const ContainerGrid = styled.div<ContainerProps>`
-  display: grid;
-  grid-template-areas:
-    "sidebar boxHeader boxHeader"
-    "sidebar boxContent boxContent";
-  /*  grid-template-rows: 8rem minmax(62rem, calc(100vh - 8rem));
-  -ms-grid-rows: 8rem minmax(62rem, calc(100dvh - 8rem));
-  grid-template-rows: 8rem minmax(62rem, calc(100dvh - 8rem)); */
-  grid-template-rows: 8rem minmax(62rem, 1fr);
-  column-gap: 2rem;
-  transition: all 0.2s ease-in-out;
-  ${(props) =>
-    props.isSidebarOpen
-      ? "grid-template-columns: 23rem 1fr;"
-      : "grid-template-columns: 13rem 1fr;"};
-
-  ${device.betweenPcAndTabPort2} {
-    grid-template-areas:
-      "boxHeader boxHeader"
-      "boxContent boxContent";
-  }
-`;
-
-export const BoxContent = styled.div`
-  grid-area: boxContent;
-  display: grid;
-  z-index: 5;
-  transition: all 0.2s ease-in-out;
-`;
-
-const App = () => {
-  const [globalState] = useStore();
+const ContainerLayout = ({ children }: ContainerLayoutProps) => {
+  const { state } = useLayout();
 
   return (
-    <ContainerGrid isSidebarOpen={globalState.isSidebarOpen}>
-      <GlobalStyles />
-      <Header />
-      <Sidebar />
-      <BoxContent>
-        <Home />
-      </BoxContent>
+    <ContainerGrid isSidebarOpen={state.isSidebarOpen}>
+      {children}
     </ContainerGrid>
+  );
+};
+
+const App = () => {
+  return (
+    <FiltersProvider>
+      <LayoutProvider>
+        <ContainerLayout>
+          {import.meta.env.VITE_TEST_RESPONSIVE && <TestResponsive />}
+          <GlobalStyles />
+          <Header />
+          <Sidebar />
+          <BoxContent>
+            <ProductsProvider>
+              <LayoutContainer />
+            </ProductsProvider>
+          </BoxContent>
+        </ContainerLayout>
+      </LayoutProvider>
+    </FiltersProvider>
   );
 };
 

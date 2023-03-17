@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { createTheme } from "@mui/material";
+import { device } from "@/styles";
 
 export const themeDataTable = createTheme({
   typography: {
@@ -16,6 +17,10 @@ export const TableParentStyled = styled.div`
   border-radius: 15px;
   box-shadow: 0 16px 15px hsla(0, 0%, 0%, 0.02);
   padding: 1rem 2rem;
+
+  ${device.phone} {
+    padding: 1rem;
+  }
 `;
 
 interface SpanCellAvailableProps {

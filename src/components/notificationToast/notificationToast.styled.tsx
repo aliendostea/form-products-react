@@ -1,3 +1,4 @@
+import { device } from "@/styles";
 import styled, { css, keyframes } from "styled-components";
 
 const animationStart = keyframes`
@@ -38,8 +39,18 @@ export const ToastStyled = styled.div<ToastStyledProps>`
   right: 38px;
   z-index: 1000;
 
+  ${device.phone} {
+    grid-template-columns: 3.9rem 12rem 3.5rem;
+    top: initial;
+    bottom: 85px;
+  }
+
   & > p:nth-child(2) {
     font-size: 1.5rem;
+
+    ${device.phone} {
+      line-height: 1.1;
+    }
   }
 
   &::after {

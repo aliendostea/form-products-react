@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { storage } from "@/config/firebase-config";
 import { ref, deleteObject } from "firebase/storage";
-import { ProductProps } from "@/models/product";
+import { ProductCablesProps, ProductLightBulbsProps } from "@/models/product";
+
+interface DeleteImageDBProps {
+  currentPage: string;
+  product: ProductLightBulbsProps | ProductCablesProps;
+}
 
 export const useDeleteImageFirebase = () => {
   const [loadingDeleteImageDB, setLoadingDeleteImageDB] = useState(false);
 
-  const deleteImageDB = async (product: ProductProps) => {
+  const deleteImageDB = async ({
+    currentPage,
+    product,
+  }: DeleteImageDBProps) => {
     setLoadingDeleteImageDB(true);
     try {
-      const desertRef = ref(storage, `lightbulbs/${product.image.id}`);
+      const desertRef = ref(storage, `${currentPage}/${product.image.id}`);
 
       await deleteObject(desertRef);
     } catch (error) {

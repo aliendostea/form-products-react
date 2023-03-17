@@ -1,13 +1,13 @@
-import { ProductProps } from "@/models/product";
-import { CollectionReference, DocumentData } from "firebase/firestore";
+import { ProductCablesProps, ProductLightBulbsProps } from "@/models/product";
 
 export type tableOrder = "asc" | "desc";
 
 export interface DataTableProps {
-  dataTableRows: ProductProps[];
+  typeProduct: string;
+  mainTitle: string;
+  dataTableRows: ProductLightBulbsProps[] | ProductCablesProps[];
   isDataLoading: boolean;
   isFilteringOnKeydown: boolean;
-  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
   handleClickEditProduct: (id: string) => void;
 }
 
@@ -15,7 +15,7 @@ export interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof ProductProps
+    property: keyof ProductLightBulbsProps | keyof ProductCablesProps
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: tableOrder;
@@ -25,15 +25,16 @@ export interface EnhancedTableProps {
 
 export interface HeadCell {
   disablePadding: boolean;
-  id: keyof ProductProps;
+  id: keyof ProductLightBulbsProps | keyof ProductCablesProps;
   label: string;
   numeric: boolean;
 }
 
 export interface EnhancedTableToolbarProps {
+  currentPage: string;
+  title: string;
   selected: string[];
   setSelected: (idsArray: string[]) => void;
   numSelected: number;
-  getData: (collection: CollectionReference<DocumentData>) => Promise<void>;
   handleClickEditProduct: (id: string) => void;
 }

@@ -1,4 +1,5 @@
 import { ButtonStyles } from "@/components/button/Button";
+import { device } from "@/styles";
 import styled, { css, keyframes } from "styled-components";
 
 export const ParentBtnEdit = styled.div`
@@ -77,6 +78,10 @@ export const ParentToolbar = styled.div<ParentToolbarProps>`
   border-top-right-radius: 10px;
   overflow: hidden;
   position: relative;
+
+  ${device.phone} {
+    padding: 0 1rem;
+  }
 
   ${({ isItemSelected }) =>
     isItemSelected &&

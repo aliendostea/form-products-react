@@ -9,6 +9,7 @@ export const useUpdateDataFirebase = () => {
   const [setImageToDB] = useSetImageFirebase();
 
   const updateDocToDB = async (
+    currentPage: string,
     product: any,
     file: Blob | Uint8Array | ArrayBuffer,
     isAnEmptyFile: boolean
@@ -18,10 +19,15 @@ export const useUpdateDataFirebase = () => {
       let imageURL = null;
 
       if (isAnEmptyFile === false) {
-        imageURL = await setImageToDB(product.image.id, file);
+        imageURL = await setImageToDB({
+          imageID: product.image.id,
+          file: file,
+          currentPage: currentPage,
+        });
       }
 
-      const productToUpdate = doc(db, "products", product.id);
+      const productToUpdate = doc(db, currentPage, product.id);
+
       await updateDoc(productToUpdate, {
         ...product,
         image: {

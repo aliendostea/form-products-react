@@ -1,42 +1,45 @@
-import {
-  SearchBoxStyled,
-  SearchBtnX,
-  SearchInputStyled,
-} from "./TextFieldSearch.styled";
+import { forwardRef } from "react";
+import { SearchBoxStyled, SearchInputStyled } from "./TextFieldSearch.styled";
 
 interface TextfieldProps {
   name: string;
   label?: string;
-  value: string;
+  value?: string;
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOnClickEmptyInput: () => void;
+  handleOnClickEmptyInput?: () => void;
+  ref: React.MutableRefObject<HTMLInputElement>;
 }
 
-const SearchBar = ({
-  name,
-  value,
-  placeholder,
-  onChange,
-  handleOnClickEmptyInput,
-}: TextfieldProps) => {
-  const handleOnClickBtnX = () => {
-    handleOnClickEmptyInput();
-  };
+/* useImperativeHandle(ref, () => {}, []); */
+/*  const handleOnClickBtnX = () => {
+      handleOnClickEmptyInput();
+    }; */
+
+{
+  /*  {ref?.current?.value !== "" && (
+          <SearchBtnX onClick={handleOnClickBtnX}></SearchBtnX>
+        )} */
+}
+
+const SearchBar = forwardRef(function SearchBar(
+  props: TextfieldProps,
+  ref: any
+) {
+  const { name, placeholder, onChange } = props;
 
   return (
     <SearchBoxStyled>
       <SearchInputStyled
+        ref={ref}
         id="search-product"
         name={name}
-        value={value}
         type="text"
         onChange={onChange}
         placeholder={placeholder}
       />
-      {value !== "" && <SearchBtnX onClick={handleOnClickBtnX}></SearchBtnX>}
     </SearchBoxStyled>
   );
-};
+});
 
 export default SearchBar;

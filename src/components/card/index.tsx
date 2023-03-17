@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "@/styles";
 
 /* interface CardStyledProps {
   error: boolean | undefined;
@@ -16,6 +17,15 @@ export const CardStyled = styled.div`
   transition: 0.25s ease-in-out;
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 20px 57px hsla(0, 0%, 0%, 0.18);
+
+  ${device.phone} {
+    grid-template-rows: min-content minmax(22rem, 80vh);
+    padding: 1.8rem 2rem 1.8rem 2rem;
+  }
+  ${device.miniPhone} {
+    grid-template-columns: minmax(10rem, 31rem);
+    padding: 1.2rem 1.8rem 1.2rem 1.8rem;
+  }
 `;
 
 interface CardProps {

@@ -1,1 +1,1 @@
-export { default as TextFieldSearch } from "./TextFieldSearch";
+export { default as SearchBar } from "./TextFieldSearch";

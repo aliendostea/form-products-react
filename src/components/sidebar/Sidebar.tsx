@@ -1,5 +1,5 @@
-import { useStore } from "@/store/store";
 import { useReducer } from "react";
+import { useLayout } from "@/hooks/use-layout";
 import {
   SidebarStyled,
   LogoStyled,
@@ -8,16 +8,21 @@ import {
   SidebarHorizBtn,
   SideBarIcon,
   SideBarTitleSpan,
+  SideBarIconCable,
+  SideBarSpanBgOnPhone,
 } from "./sidebar.styled";
+import { CURRENT_PAGE_VALUES } from "@/store/reducers/layoutReducers";
 
 interface ArgSidebarButtonOnclick {
-  BUTTON_1: boolean;
-  BUTTON_2: boolean;
+  LIGHT_BULBS: boolean;
+  CABLES: boolean;
+  MISCELLANEUS: boolean;
 }
 
 enum SidebarButtonOnclickActionKind {
-  BUTTON_1 = "BUTTON_1",
-  BUTTON_2 = "BUTTON_2",
+  LIGHT_BULBS = "LIGHT_BULBS",
+  CABLES = "CABLES",
+  MISCELLANEUS = "MISCELLANEUS",
 }
 
 interface SidebarButtonOnclick {
@@ -26,99 +31,142 @@ interface SidebarButtonOnclick {
 }
 
 const initialArgSidebarButtonOnclick: ArgSidebarButtonOnclick = {
-  BUTTON_1: true,
-  BUTTON_2: false,
+  LIGHT_BULBS: true,
+  CABLES: false,
+  MISCELLANEUS: false,
 };
 
 function sidebarButtonOnclick(
   state: ArgSidebarButtonOnclick,
   action: SidebarButtonOnclick
 ) {
+  const newState = structuredClone(state);
+
+  for (const property in newState) {
+    newState[property as keyof typeof newState] = false;
+  }
+
   return {
-    BUTTON_1: !state["BUTTON_1"],
-    BUTTON_2: !state["BUTTON_2"],
+    ...newState,
+    [action.type]: action.payload,
   };
 }
 
 const Sidebar = () => {
-  const [globalState] = useStore();
+  const { state, setCurrentPage, toggleSidebar } = useLayout();
   const [stateButtons, dispatch] = useReducer(
     sidebarButtonOnclick,
     initialArgSidebarButtonOnclick
   );
 
-  const handleOnClick = () => {
+  const handleOnClickBulbs = () => {
+    if (state.currentPage === CURRENT_PAGE_VALUES.LIGHT_BULBS) return;
+
     dispatch({
-      type: SidebarButtonOnclickActionKind.BUTTON_1,
-      payload: false,
+      type: SidebarButtonOnclickActionKind.LIGHT_BULBS,
+      payload: true,
     });
+    setCurrentPage(CURRENT_PAGE_VALUES.LIGHT_BULBS);
   };
 
-  /*  const handleOnClick2 = () => {
+  const handleOnClickCables = () => {
+    if (state.currentPage === CURRENT_PAGE_VALUES.CABLES) return;
+
     dispatch({
-      type: SidebarButtonOnclickActionKind.BUTTON_2,
-      payload: false,
+      type: SidebarButtonOnclickActionKind.CABLES,
+      payload: true,
     });
-  }; */
+
+    setCurrentPage(CURRENT_PAGE_VALUES.CABLES);
+  };
+
+  const handleOnClickOthers = () => {
+    if (state.currentPage === CURRENT_PAGE_VALUES.MISCELLANEUS) return;
+
+    dispatch({
+      type: SidebarButtonOnclickActionKind.MISCELLANEUS,
+      payload: true,
+    });
+
+    setCurrentPage(CURRENT_PAGE_VALUES.MISCELLANEUS);
+  };
+
+  const handleOnClickSidebarOnPhone = () => {
+    toggleSidebar();
+  };
 
   return (
-    <SidebarStyled>
+    <SidebarStyled isActive={state.isSidebarOpen}>
       <LogoStyled>
         <img src="./img/zentec-logo.svg" alt="Zentec" loading="lazy" />
       </LogoStyled>
+      <SideBarSpanBgOnPhone
+        onClick={handleOnClickSidebarOnPhone}
+        isActive={state.isSidebarOpen}
+      />
 
       <SidebarUl>
         <SidebarLi>
           <SidebarHorizBtn
-            onClick={handleOnClick}
-            isActive={stateButtons.BUTTON_1}
+            onClick={handleOnClickBulbs}
+            isActive={stateButtons.LIGHT_BULBS}
             type="button"
           >
             <SideBarIcon
-              isActive={stateButtons.BUTTON_1}
-              isSidebarOnLeft={globalState.isSidebarOpen}
+              isActive={stateButtons.LIGHT_BULBS}
+              isSidebarOnLeft={state.isSidebarOpen}
             >
-              <img src="./img/icon-cart.png" alt="Zentec" loading="lazy" />
+              <img
+                src="./img/icon-light-bulb.png"
+                alt="light-bulb"
+                loading="lazy"
+              />
             </SideBarIcon>
-            <SideBarTitleSpan isActive={globalState.isSidebarOpen}>
+            <SideBarTitleSpan isActive={state.isSidebarOpen}>
               Bombillos
             </SideBarTitleSpan>
           </SidebarHorizBtn>
         </SidebarLi>
-        {/*   <SidebarLi>
+
+        <SidebarLi>
           <SidebarHorizBtn
-            onClick={handleOnClick2}
-            isActive={stateButtons.BUTTON_2}
+            onClick={handleOnClickCables}
+            isActive={stateButtons.CABLES}
             type="button"
           >
-            <SideBarIcon
-              isActive={stateButtons.BUTTON_2}
-              isSidebarOnLeft={globalState.isSidebarOpen}
+            <SideBarIconCable
+              isActive={stateButtons.CABLES}
+              isSidebarOnLeft={state.isSidebarOpen}
             >
-              <img src="./img/icon-cart.png" alt="Zentec" loading="lazy" />
-            </SideBarIcon>
-            <SideBarTitleSpan isActive={globalState.isSidebarOpen}>
-              cables
+              <img src="./img/icon-cable.png" alt="cable" loading="lazy" />
+            </SideBarIconCable>
+            <SideBarTitleSpan isActive={state.isSidebarOpen}>
+              Cables
             </SideBarTitleSpan>
           </SidebarHorizBtn>
         </SidebarLi>
+
         <SidebarLi>
           <SidebarHorizBtn
-            onClick={handleOnClick2}
-            isActive={stateButtons.BUTTON_2}
+            onClick={handleOnClickOthers}
+            isActive={stateButtons.MISCELLANEUS}
             type="button"
           >
             <SideBarIcon
-              isActive={stateButtons.BUTTON_2}
-              isSidebarOnLeft={globalState.isSidebarOpen}
+              isActive={stateButtons.MISCELLANEUS}
+              isSidebarOnLeft={state.isSidebarOpen}
             >
-              <img src="./img/icon-cart.png" alt="Zentec" loading="lazy" />
+              <img
+                src="./img/icon-miscellaneus.png"
+                alt="cart"
+                loading="lazy"
+              />
             </SideBarIcon>
-            <SideBarTitleSpan isActive={globalState.isSidebarOpen}>
-              Eliminados
+            <SideBarTitleSpan isActive={state.isSidebarOpen}>
+              Otros
             </SideBarTitleSpan>
           </SidebarHorizBtn>
-        </SidebarLi> */}
+        </SidebarLi>
       </SidebarUl>
     </SidebarStyled>
   );

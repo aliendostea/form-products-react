@@ -11,6 +11,10 @@ export const ModalStyle = styled.div`
   /* backdrop-filter: saturate(91%) blur(6px); */
   position: relative;
   z-index: 11;
+
+  ${device.miniPhone} {
+    padding: 2rem 2rem;
+  }
 `;
 
 export const ModalBody = styled.div`
@@ -44,7 +48,7 @@ export const ModalParent = styled.div`
     grid-template-columns: minmax(22rem, 57rem);
   }
   ${device.phone} {
-    grid-template-columns: minmax(32rem, 1fr);
+    grid-template-columns: minmax(32rem, 37rem);
   }
 `;
 
@@ -65,6 +69,11 @@ export const BtnClose = styled.button`
   ${device.phone} {
     top: 46px;
     right: 5px;
+  }
+
+  ${device.phone} {
+    top: 13px;
+    right: 10px;
   }
 
   & svg {

@@ -1,36 +1,53 @@
 import { useState } from "react";
 import { doc, writeBatch } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
-import { useDeleteImageFirebase } from "../deleteImage/use-detele-image";
-import { useStore } from "@/store/store";
-import { ProductProps } from "@/models/product";
+import { useDeleteImageFirebase } from "./use-detele-image";
+import { ProductCablesProps, ProductLightBulbsProps } from "@/models/product";
+import { useProducts } from "../use-products";
+
+interface DeleteDocInDBProps {
+  productsIDs: string[];
+  currentPage: string;
+}
 
 export const useDeleteDataFirebase = () => {
   const batch = writeBatch(db);
-  const [globalState] = useStore();
+  const { products } = useProducts({});
+  const { allProducts } = products;
   const [deleteImageDB] = useDeleteImageFirebase();
   const [isError, setIsError] = useState(false);
   const [loadingItemDeleted, setLoadingItemDeleted] = useState(false);
 
-  function filterProductSelected(id: string) {
-    const [productSelected] = globalState.dataProducts.filter(
-      (product: ProductProps) => product.id === id
+  function filterProductSelected(id: string, currentPage: string) {
+    const [productsArray]: any = allProducts.filter(
+      (products: ProductLightBulbsProps | ProductCablesProps) =>
+        Object.keys(products)[0] === currentPage
+    );
+
+    const [productSelected] = productsArray[currentPage].filter(
+      (product: ProductLightBulbsProps | ProductCablesProps) =>
+        product.id === id
     );
     return productSelected;
   }
 
-  const deleteDocInDB = async (idsProduct: string[]) => {
+  const deleteDocInDB = async (props: DeleteDocInDBProps) => {
+    const { productsIDs, currentPage } = props;
+
     setLoadingItemDeleted(true);
 
     try {
-      for (const productID of idsProduct) {
-        const productSelected = filterProductSelected(productID);
+      for (const productID of productsIDs) {
+        const productSelected = filterProductSelected(productID, currentPage);
 
-        await deleteImageDB(productSelected);
+        await deleteImageDB({
+          product: productSelected,
+          currentPage: currentPage,
+        });
       }
 
-      const productsToDelete = idsProduct.map((id) => {
-        const productToDelete = doc(db, "products", id);
+      const productsToDelete = productsIDs.map((id) => {
+        const productToDelete = doc(db, currentPage, id);
         return productToDelete;
       });
 

@@ -5,7 +5,11 @@ const inputLetterSpacing = "0.2px";
 const inputPlaceholderFontWeight = 600;
 const color1 = "#c2c2c2";
 
-export const SearchInputStyled = styled.input`
+interface SearchInputStyledProps {
+  ref: React.ForwardedRef<any> | null;
+}
+
+export const SearchInputStyled = styled.input<SearchInputStyledProps>`
   width: 100%;
   height: 5.5rem;
   padding: 0 2.4rem;

@@ -12,6 +12,7 @@ import EditBulbsForm from "./EditBulbsForm";
 import { ProductLightBulbsProps } from "@/models/product";
 import { INITIAL_LIGHT_BULBS_DATA } from "@/store/initialProductData";
 import { PagesCardBaseStyled } from "@/styles";
+import { AddAllProductsToWeb } from "../components/addAllProductsToWeb";
 
 interface LightBulbsHomeProps {
   products: ProductLightBulbsProps[];
@@ -44,6 +45,7 @@ const LightBulbsHome = ({ products, loadingData }: LightBulbsHomeProps) => {
     <>
       <PagesCardBaseStyled>
         <AddNewProduct>
+          <AddAllProductsToWeb />
           <AddNewProductBtn onClick={handleCardOnClick}>
             <AddIcon />
             <span>Add product</span>

@@ -4,20 +4,17 @@ import { ref, deleteObject } from "firebase/storage";
 import { ProductCablesProps, ProductLightBulbsProps } from "@/models/product";
 
 interface DeleteImageDBProps {
-  currentPage: string;
   product: ProductLightBulbsProps | ProductCablesProps;
+  productType: string;
 }
 
 export const useDeleteImageFirebase = () => {
   const [loadingDeleteImageDB, setLoadingDeleteImageDB] = useState(false);
 
-  const deleteImageDB = async ({
-    currentPage,
-    product,
-  }: DeleteImageDBProps) => {
+  const deleteImageDB = async ({ product }: DeleteImageDBProps) => {
     setLoadingDeleteImageDB(true);
     try {
-      const desertRef = ref(storage, `${currentPage}/${product.image.id}`);
+      const desertRef = ref(storage, `${product.type}/${product.image.id}`);
 
       await deleteObject(desertRef);
     } catch (error) {

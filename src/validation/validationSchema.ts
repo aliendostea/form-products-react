@@ -7,6 +7,7 @@ export const validationSchemaLightBulbs = Yup.object({
   power: Yup.string().required(),
   description: Yup.string().required(),
   available: Yup.bool().oneOf([true, false], "Field must be checked"),
+  published: Yup.bool().oneOf([true, false], "Field must be checked"),
   discount: Yup.string().required(),
   image: Yup.mixed(),
 });
@@ -18,6 +19,7 @@ export const validationSchemaCables = Yup.object({
   caliber: Yup.string().required(),
   description: Yup.string().required(),
   available: Yup.bool().oneOf([true, false], "Field must be checked"),
+  published: Yup.bool().oneOf([true, false], "Field must be checked"),
   discount: Yup.string().required(),
   image: Yup.mixed(),
 });

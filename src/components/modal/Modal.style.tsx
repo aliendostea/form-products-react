@@ -1,5 +1,6 @@
 import { device } from "@/styles";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { ButtonStyles } from "../button/Button";
 
 export const ModalStyle = styled.div`
   height: 100%;
@@ -84,4 +85,46 @@ export const BtnClose = styled.button`
     transform: translateY(-3px);
     color: rgb(161, 161, 161);
   }
+`;
+
+interface BtnModalProps {
+  bg: string;
+  color: string;
+}
+
+export const BtnModal = styled(ButtonStyles)<BtnModalProps>`
+  width: 12rem;
+  padding: 18px 10px;
+
+  ${({ bg }) =>
+    bg &&
+    css`
+      background-color: ${bg};
+    `};
+
+  ${({ color }) =>
+    color &&
+    css`
+      color: ${color};
+    `};
+`;
+
+const rotateLoader = keyframes`
+   0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const ButtonLoader = styled.span`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #fff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: ${rotateLoader} 1s linear infinite;
 `;

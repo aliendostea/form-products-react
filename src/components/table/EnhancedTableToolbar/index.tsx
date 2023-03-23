@@ -12,8 +12,6 @@ import { useDeleteDataFirebase } from "@/hooks/deleteData/use-delete-data";
 import Card from "../../card";
 import { useGetData } from "@/hooks/use-get-data";
 import {
-  BtnModal,
-  ButtonLoader,
   ParenBtnModal,
   ParentBodyModal,
   ParentBtnEdit,
@@ -22,9 +20,11 @@ import {
 import { NotificationToast } from "@/components/notificationToast";
 import { TitleStyled } from "@/components/title";
 import { Modal } from "@/components/modal";
+import { BtnModal, ButtonLoader } from "@/components/modal/Modal.style";
 
 export default function EnhancedTableToolbar({
   currentPage,
+  selectedProducts,
   title,
   selected,
   setSelected,
@@ -41,6 +41,7 @@ export default function EnhancedTableToolbar({
     await deleteDocInDB({
       productsIDs: [...selected],
       currentPage: currentPage,
+      selectedProducts: selectedProducts,
     });
 
     getData();

@@ -32,6 +32,7 @@ export const ToastStyled = styled.div<ToastStyledProps>`
   -webkit-animation: ${animationStart} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
   animation: ${animationStart} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  box-shadow: 0 16px 39px rgba(0, 0, 0, 0.271);
   position: absolute;
   top: 110px;
   right: -329px;

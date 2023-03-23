@@ -32,6 +32,7 @@ export interface HeadCell {
 
 export interface EnhancedTableToolbarProps {
   currentPage: string;
+  selectedProducts: [ProductLightBulbsProps & ProductCablesProps];
   title: string;
   selected: string[];
   setSelected: (idsArray: string[]) => void;

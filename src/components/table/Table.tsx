@@ -39,6 +39,7 @@ export default function DataTable({
     keyof ProductLightBulbsProps | keyof ProductCablesProps
   >("name");
   const [selected, setSelected] = useState<string[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<any>([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -54,11 +55,15 @@ export default function DataTable({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = dataTableRows.map((n) => n.name);
+      const newSelected: any[] = dataTableRows.map((n) => n.id);
+      const newSelectedProducts: any[] = dataTableRows.map((n) => n);
+
       setSelected(newSelected);
+      setSelectedProducts(newSelectedProducts);
       return;
     }
     setSelected([]);
+    setSelectedProducts([]);
   };
 
   const handleClick = (
@@ -66,25 +71,35 @@ export default function DataTable({
     name: string,
     row: any
   ) => {
-    console.log("row", row);
-
     const selectedIndex = selected.indexOf(name);
+    const selectedIndexObj = selectedProducts.indexOf(row);
     let newSelected: string[] = [];
+    let newSelectedRowObjs: any[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
+      newSelectedRowObjs = newSelectedRowObjs.concat(selectedProducts, row);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
+      newSelectedRowObjs = newSelectedRowObjs.concat(selectedProducts.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelectedRowObjs = newSelectedRowObjs.concat(
+        selectedProducts.slice(0, -1)
+      );
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1)
       );
-    }
 
+      newSelectedRowObjs = newSelectedRowObjs.concat(
+        selectedProducts.slice(0, selectedIndexObj),
+        selectedProducts.slice(selectedIndexObj + 1)
+      );
+    }
     setSelected(newSelected);
+    setSelectedProducts(newSelectedRowObjs);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -112,6 +127,7 @@ export default function DataTable({
       <TableParentStyled>
         <EnhancedTableToolbar
           currentPage={typeProduct}
+          selectedProducts={selectedProducts}
           title={mainTitle}
           selected={selected}
           setSelected={setSelected}

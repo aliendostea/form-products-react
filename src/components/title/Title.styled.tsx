@@ -13,3 +13,17 @@ export const TitleStyled = styled.span`
     line-height: 1;
   }
 `;
+
+export const TitleStyled2 = styled.span`
+  display: block;
+  font-family: ${fontFamily1};
+  font-weight: 600;
+  font-size: 3.2rem;
+  line-height: 1.2;
+  letter-spacing: 0.37px;
+  text-align: center;
+
+  ${device.phone} {
+    line-height: 1;
+  }
+`;

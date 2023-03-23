@@ -15,6 +15,7 @@ import {
   ImageFormSelected,
   InputFiles,
   NotificationToast,
+  SwitchBoxParentStyled,
   SwitchBoxStyled,
   TitleStyled,
 } from "@/components";
@@ -98,27 +99,51 @@ const EditBulbsForm = ({ productValues }: HomeEditItemFormProps) => {
             )}
           </FormBoxImgs>
 
-          <SwitchBoxStyled>
-            <LabelStyled>Available</LabelStyled>
+          <SwitchBoxParentStyled>
+            <SwitchBoxStyled>
+              <LabelStyled>Available</LabelStyled>
 
-            <Switch
-              name="available"
-              checked={values.available}
-              size="medium"
-              value={values.available}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
+              <Switch
+                name="available"
+                checked={values.available}
+                size="medium"
+                value={values.available}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
 
-            <span>
-              {values.available
-                ? "Producto disponible"
-                : "Producto no disponible"}
-            </span>
-            {errors?.available && (
-              <SpanErrorStyled> Available field is required </SpanErrorStyled>
-            )}
-          </SwitchBoxStyled>
+              <span>
+                {values.available
+                  ? "Producto disponible"
+                  : "Producto no disponible"}
+              </span>
+              {errors?.available && (
+                <SpanErrorStyled> Available field is required </SpanErrorStyled>
+              )}
+            </SwitchBoxStyled>
+
+            <SwitchBoxStyled>
+              <LabelStyled>Published</LabelStyled>
+
+              <Switch
+                name="published"
+                checked={values.published}
+                size="medium"
+                value={values.published}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+
+              <span>
+                {values.published
+                  ? "Producto publicado"
+                  : "Producto no publicado"}
+              </span>
+              {errors?.published && (
+                <SpanErrorStyled> Published field is required </SpanErrorStyled>
+              )}
+            </SwitchBoxStyled>
+          </SwitchBoxParentStyled>
 
           <Textfield
             id="name"

@@ -24,12 +24,9 @@ export const productsInitialState: AllProductsProps = ALL_PRODUCTS;
 
 const UPDATE_STATE_BY_ACTION = {
   ADD_ALL_PRODUCTS: (state: AllProductsProps, action: addAllProductsType) => {
-    /*   const newState = structuredClone(state)
-    const newState2 = {  lightBulbs: [],
-      cables: [],
-      miscellaneus: [], } */
+    const newState = { allProducts: [...action.payload.allProducts] };
 
-    return action.payload;
+    return newState;
   },
 
   ADD_PRODUCT: (state: AllProductsProps, action: addProductType) => {

@@ -3,34 +3,36 @@ import { device } from "@/styles";
 
 export const AddNewProduct = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: min-content min-content;
   justify-items: end;
   margin-bottom: 8px;
+  justify-content: end;
+  gap: 17px;
 `;
 
 export const AddNewProductBtn = styled.button`
   height: 5rem;
-  width: 16rem;
   display: grid;
   grid-template-columns: 3rem 1fr;
   justify-items: center;
   align-content: center;
   padding: 0 14px;
-  background-color: #f6f6f6;
+  background-color: var(--color-primary);
   border-radius: 11px;
   transition: 0.3s ease-in-out;
 
   & > svg {
     width: 46px;
     height: 27px;
-    fill: var(--color-primary);
+    fill: #f6f6f6;
     align-self: center;
   }
 
   & span {
     font-size: 1.5rem;
     font-weight: 568;
-    color: var(--color-primary);
+    white-space: nowrap;
+    color: #f6f6f6;
   }
 
   &:hover {
@@ -127,12 +129,14 @@ export const ImageFormEmpty = styled.figure<ImageFormEmptyProps>`
       : "border: 2px solid var(--color-primary);"};
 `;
 
-export const SwitchBoxStyled = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
+export const SwitchBoxParentStyled = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: space-between;
+`;
 
-  ${device.phone} {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+export const SwitchBoxStyled = styled.div`
+  & > label {
+    margin-bottom: 0;
   }
 `;

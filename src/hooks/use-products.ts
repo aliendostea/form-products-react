@@ -10,6 +10,23 @@ interface UseProductsProps {
   currentPage?: string;
 }
 
+interface GetAllProductsToFilterProps {
+  allProducts: [ProductCablesProps | ProductLightBulbsProps];
+  filter: string;
+}
+
+function getAllProductsToFilter({
+  allProducts,
+  filter,
+}: GetAllProductsToFilterProps):
+  | ProductCablesProps[]
+  | ProductLightBulbsProps[] {
+  const [products]: any = allProducts.filter(
+    (products) => Object.keys(products)[0] === filter
+  );
+  return products[filter];
+}
+
 export const useProducts = (props: UseProductsProps) => {
   const context = useContext(ProductsContext);
   const { products, addAllProducts, addProduct }: any = context;
@@ -27,9 +44,16 @@ export const useProducts = (props: UseProductsProps) => {
     if (stringToSearch === "") return products;
 
     const allProductsClone = structuredClone(allProducts);
-    const [lightBulbsObj, cablesObj] = allProductsClone;
-    const { lightBulbs } = lightBulbsObj;
-    const { cables } = cablesObj;
+
+    const lightBulbs = getAllProductsToFilter({
+      allProducts: allProductsClone,
+      filter: "lightBulbs",
+    });
+    const cables = getAllProductsToFilter({
+      allProducts: allProductsClone,
+      filter: "cables",
+    });
+
     const allProductsArrayToFilter = [...lightBulbs, ...cables];
 
     return allProductsArrayToFilter?.filter(

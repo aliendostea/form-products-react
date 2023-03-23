@@ -12,6 +12,7 @@ import AddCablesForm from "./AddCablesForm";
 import { INITIAL_CABLES_DATA } from "@/store/initialProductData";
 import { ProductCablesProps } from "@/models/product";
 import { PagesCardBaseStyled } from "@/styles";
+import { AddAllProductsToWeb } from "../components/addAllProductsToWeb";
 
 interface CablesHomeProps {
   products: ProductCablesProps[];
@@ -44,6 +45,8 @@ const CablesHome = ({ products, loadingData }: CablesHomeProps) => {
     <>
       <PagesCardBaseStyled>
         <AddNewProduct>
+          <AddAllProductsToWeb />
+
           <AddNewProductBtn onClick={handleCardOnClick}>
             <AddIcon />
             <span>Add product</span>

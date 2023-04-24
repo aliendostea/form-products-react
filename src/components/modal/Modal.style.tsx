@@ -13,6 +13,10 @@ export const ModalStyle = styled.div`
   position: relative;
   z-index: 11;
 
+  ${device.phone} {
+    height: initial;
+  }
+
   ${device.miniPhone} {
     padding: 2rem 2rem;
   }

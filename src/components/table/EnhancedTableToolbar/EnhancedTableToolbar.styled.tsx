@@ -13,6 +13,10 @@ export const ParentBodyModal = styled.div`
   justify-content: center;
   gap: 2rem;
   text-align: center;
+
+  ${device.phone} {
+    width: initial;
+  }
 `;
 
 export const ParenBtnModal = styled.div`

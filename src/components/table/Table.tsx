@@ -174,6 +174,12 @@ export default function DataTable({
                           }}
                         />
                       </TableCell>
+                      <TableCell align="left">
+                        <ProductPicture
+                          srcRoute={row?.image?.route}
+                          imgAlt={row.name}
+                        />
+                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
@@ -182,12 +188,25 @@ export default function DataTable({
                       >
                         <span>{row.internalCode}</span>
                       </TableCell>
-                      <TableCell align="left">
+                      <TableCell
+                        align="left"
+                        style={{ paddingRight: "100px", whiteSpace: "nowrap" }}
+                      >
                         <span>{row.name}</span>
                       </TableCell>
                       <TableCell align="left">
                         <span>${row.price}</span>
                       </TableCell>
+                      {typeProduct === "searchingProduct" && (
+                        <TableCell align="left">
+                          <span>{row.power ? row.power : "-"}</span>
+                        </TableCell>
+                      )}
+                      {typeProduct === "searchingProduct" && (
+                        <TableCell align="left">
+                          <span>{row.caliber ? row.caliber : "-"}</span>
+                        </TableCell>
+                      )}
                       {typeProduct === "lightBulbs" && (
                         <TableCell align="left">
                           <span>{row.power}</span>
@@ -204,12 +223,7 @@ export default function DataTable({
                       <TableCell align="left">
                         <span>{row.discount}%</span>
                       </TableCell>
-                      <TableCell align="left">
-                        <ProductPicture
-                          srcRoute={row?.image?.route}
-                          imgAlt={row.name}
-                        />
-                      </TableCell>
+
                       <TableCell align="left">
                         <SpanCellAvailable isAvailable={row.available}>
                           {row.available ? "Disponible" : "No disponible"}

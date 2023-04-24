@@ -4,10 +4,16 @@ import { useFilters } from "./use-filters.js";
 import {
   ProductCablesProps,
   ProductLightBulbsProps,
+  ProductPropsMain,
 } from "@/models/product.js";
 
 interface UseProductsProps {
   currentPage?: string;
+}
+
+interface NewProductTest extends ProductPropsMain {
+  power?: string;
+  caliber?: string;
 }
 
 interface GetAllProductsToFilterProps {
@@ -56,18 +62,23 @@ export const useProducts = (props: UseProductsProps) => {
 
     const allProductsArrayToFilter = [...lightBulbs, ...cables];
 
-    return allProductsArrayToFilter?.filter(
-      (obj: ProductLightBulbsProps | ProductCablesProps) => {
-        return (
-          obj.name.toLowerCase().search(stringToSearch.toLowerCase()) !== -1 ||
-          obj.internalCode
-            .toLowerCase()
-            .search(stringToSearch.toLowerCase()) !== -1 ||
-          obj.description.toLowerCase().search(stringToSearch.toLowerCase()) !==
-            -1
-        );
-      }
-    );
+    const filtered = allProductsArrayToFilter?.filter((obj: NewProductTest) => {
+      return (
+        obj.name.toLowerCase().search(stringToSearch.toLowerCase()) !== -1 ||
+        obj.internalCode.toLowerCase().search(stringToSearch.toLowerCase()) !==
+          -1 ||
+        (obj?.power &&
+          obj?.power?.toLowerCase().search(stringToSearch.toLowerCase()) !==
+            -1) ||
+        (obj?.caliber &&
+          obj?.caliber?.toLowerCase().search(stringToSearch.toLowerCase()) !==
+            -1) ||
+        obj.description.toLowerCase().search(stringToSearch.toLowerCase()) !==
+          -1
+      );
+    });
+
+    return filtered;
   }, [products, stringToSearch]);
 
   return {

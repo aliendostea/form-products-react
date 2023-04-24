@@ -9,7 +9,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { EnhancedTableToolbarProps } from "../models";
 import useModal from "@/hooks/use-modal";
 import { useDeleteDataFirebase } from "@/hooks/deleteData/use-delete-data";
-import Card from "../../card";
 import { useGetData } from "@/hooks/use-get-data";
 import {
   ParenBtnModal,
@@ -21,6 +20,7 @@ import { NotificationToast } from "@/components/notificationToast";
 import { TitleStyled } from "@/components/title";
 import { Modal } from "@/components/modal";
 import { BtnModal, ButtonLoader } from "@/components/modal/Modal.style";
+import { Card } from "@/components/card";
 
 export default function EnhancedTableToolbar({
   currentPage,
@@ -107,8 +107,8 @@ export default function EnhancedTableToolbar({
         onMouseDownModal={onMouseDownModal}
         modalRef={modalRef}
       >
-        <Card>
-          <ParentBodyModal>
+        <Card size="small">
+          <>
             <Typography
               sx={{ flex: "1 1 100%" }}
               color="inherit"
@@ -117,49 +117,52 @@ export default function EnhancedTableToolbar({
             >
               Delete products
             </Typography>
-            <div>
-              <span>
-                Are you sure you want to delete {numSelected}{" "}
-                {numSelected === 1 ? "product" : "products"}?
-              </span>
 
-              <ParenBtnModal>
-                <BtnModal
-                  bg="#CFCFCF"
-                  color="#3b3b3b"
-                  onClick={() => closeModal()}
-                >
-                  Cancel
-                </BtnModal>
-                {loadingItemDeleted === false && (
-                  <BtnModal
-                    bg="#e37844"
-                    color="#f4f4f4"
-                    onClick={handleOnClickDeleteItem}
-                  >
-                    Delete
-                  </BtnModal>
-                )}
-                {loadingItemDeleted && (
-                  <BtnModal
-                    bg="#aa5b34"
-                    color="#f4f4f4"
-                    onClick={handleOnClickDeleteItem}
-                  >
-                    <ButtonLoader></ButtonLoader>
-                  </BtnModal>
-                )}
-              </ParenBtnModal>
-            </div>
+            <ParentBodyModal>
+              <div>
+                <span>
+                  Are you sure you want to delete {numSelected}{" "}
+                  {numSelected === 1 ? "product" : "products"}?
+                </span>
 
-            <NotificationToast
-              title="Productos eliminados correctamente"
-              isToastActive={isToastActive}
-              errorTitle="Error eliminando producto"
-              isErrorActive={isError}
-              setIsToastActive={setIsToastActive}
-            />
-          </ParentBodyModal>
+                <ParenBtnModal>
+                  <BtnModal
+                    bg="#CFCFCF"
+                    color="#3b3b3b"
+                    onClick={() => closeModal()}
+                  >
+                    Cancel
+                  </BtnModal>
+                  {loadingItemDeleted === false && (
+                    <BtnModal
+                      bg="#e37844"
+                      color="#f4f4f4"
+                      onClick={handleOnClickDeleteItem}
+                    >
+                      Delete
+                    </BtnModal>
+                  )}
+                  {loadingItemDeleted && (
+                    <BtnModal
+                      bg="#aa5b34"
+                      color="#f4f4f4"
+                      onClick={handleOnClickDeleteItem}
+                    >
+                      <ButtonLoader></ButtonLoader>
+                    </BtnModal>
+                  )}
+                </ParenBtnModal>
+              </div>
+
+              <NotificationToast
+                title="Productos eliminados correctamente"
+                isToastActive={isToastActive}
+                errorTitle="Error eliminando producto"
+                isErrorActive={isError}
+                setIsToastActive={setIsToastActive}
+              />
+            </ParentBodyModal>
+          </>
         </Card>
       </Modal>
     </ParentToolbar>

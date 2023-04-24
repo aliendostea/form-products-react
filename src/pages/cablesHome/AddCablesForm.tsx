@@ -5,6 +5,7 @@ import { cablesRef } from "@/config/firebase-config";
 import { createProvisionalId } from "@/utilities/utilitiesFunctions";
 import {
   Button,
+  Card,
   FormBoxImgs,
   FormStyled,
   ImageFormEmpty,
@@ -15,7 +16,6 @@ import {
   TitleStyled,
 } from "@/components";
 import { useSetDataFirebase } from "@/hooks/setData/use-set-data";
-import Card from "@/components/card";
 import Switch from "@mui/material/Switch";
 import { ProductCablesProps } from "@/models/product";
 import { InputFilesImageProps } from "@/models/form";

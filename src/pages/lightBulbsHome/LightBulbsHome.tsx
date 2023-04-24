@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import {
   AddNewProduct,
   AddNewProductBtn,
   Modal,
-  TableProducts,
+  TableProductsOnLoad,
 } from "@/components";
 import AddIcon from "@mui/icons-material/Add";
 import useModal from "@/hooks/use-modal";
@@ -13,6 +13,11 @@ import { ProductLightBulbsProps } from "@/models/product";
 import { INITIAL_LIGHT_BULBS_DATA } from "@/store/initialProductData";
 import { PagesCardBaseStyled } from "@/styles";
 import { AddAllProductsToWeb } from "../components/addAllProductsToWeb";
+const TableProducts: any = lazy(() =>
+  import("../../components/table").then(({ TableProducts }) => ({
+    default: TableProducts,
+  }))
+);
 
 interface LightBulbsHomeProps {
   products: ProductLightBulbsProps[];
@@ -52,14 +57,16 @@ const LightBulbsHome = ({ products, loadingData }: LightBulbsHomeProps) => {
           </AddNewProductBtn>
         </AddNewProduct>
 
-        <TableProducts
-          typeProduct="lightBulbs"
-          mainTitle="Bombillos products"
-          dataTableRows={products}
-          handleClickEditProduct={handleClickEditProduct}
-          isDataLoading={loadingData}
-          isFilteringOnKeydown={false}
-        />
+        <Suspense fallback={<TableProductsOnLoad />}>
+          <TableProducts
+            typeProduct="lightBulbs"
+            mainTitle="Bombillos products"
+            dataTableRows={products}
+            handleClickEditProduct={handleClickEditProduct}
+            isDataLoading={loadingData}
+            isFilteringOnKeydown={false}
+          />
+        </Suspense>
       </PagesCardBaseStyled>
 
       <Modal

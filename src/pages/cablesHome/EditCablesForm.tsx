@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFormik } from "formik";
-import Card from "@/components/card";
 import { validationSchemaCables } from "@/validation/validationSchema";
 import Textfield, {
   LabelStyled,
@@ -10,6 +9,7 @@ import { useGetData } from "@/hooks/use-get-data";
 import Switch from "@mui/material/Switch";
 import {
   Button,
+  Card,
   FormBoxImgs,
   FormStyled,
   ImageFormSelected,

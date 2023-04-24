@@ -29,12 +29,26 @@ const SpinLoaderStyled = styled.span<SpinLoaderProps>`
   ${({ size }) =>
     size
       ? css`
+          width: ${size}px;
+          height: ${size}px;
+          border-top: 6px solid #3c3c3c;
+          border-right: 6px solid transparent;
+        `
+      : css`
           width: 65px;
           height: 65px;
           border-top: 6px solid #3c3c3c;
           border-right: 6px solid transparent;
+        `}
+
+  ${({ color }) =>
+    color
+      ? css`
+          border-top: 6px solid ${color};
         `
-      : ""}
+      : css`
+          border-top: 6px solid #3c3c3c;
+        `}
 `;
 
 export const SpinLoaderParentStyled = styled.div`

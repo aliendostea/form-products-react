@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUpdateDataFirebase } from "@/hooks/updateData/use-update-data";
 import {
   AddNewProductBtn,
+  Card,
   Modal,
   NotificationToast,
   TitleStyled2,
@@ -9,7 +10,6 @@ import {
 import { useProducts } from "@/hooks/use-products";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import useModal from "@/hooks/use-modal";
-import Card from "@/components/card";
 import { ParenBtnModal } from "@/components/table/EnhancedTableToolbar/EnhancedTableToolbar.styled";
 import { BtnModal, ButtonLoader } from "@/components/modal/Modal.style";
 import styled from "styled-components";
@@ -54,8 +54,6 @@ interface EditItemProps {
   productType: string;
 }
 
-const TESTTING = false;
-
 function getAllProductsToFilter({
   allProducts,
   filter,
@@ -75,7 +73,7 @@ function setAllProductsPublishedTrue({
   let newArrayProduc: any = [];
 
   for (const product of productsClone) {
-    if (product["published"] === TESTTING) {
+    if (product["published"] === false) {
       product["published"] = true;
     }
     newArrayProduc = newArrayProduc.concat([product]);
@@ -170,7 +168,7 @@ const AddAllProductsToWeb = () => {
     const allProductsArrayToFilter = [...lightBulbs, ...cables];
 
     const notPublishedProducts = allProductsArrayToFilter.filter(
-      (element) => element.published === TESTTING
+      (element) => element.published === false
     );
 
     setProductsCount(notPublishedProducts.length);
@@ -194,7 +192,7 @@ const AddAllProductsToWeb = () => {
         onMouseDownModal={onMouseDownModal}
         modalRef={modalRef}
       >
-        <Card>
+        <Card size="small">
           <>
             <TitleStyled2>Add all product to the web</TitleStyled2>
 

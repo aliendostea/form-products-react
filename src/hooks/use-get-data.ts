@@ -3,14 +3,13 @@ import { getDocs } from "firebase/firestore";
 import { useProducts } from "./use-products";
 import { cablesRef, lightbulbsRef } from "@/config/firebase-config";
 import { createLightbulbsAdapter } from "@/adapters/lightbulbsAdapter";
-import { ProductLightBulbsProps } from "@/models/product";
+import { ProductCablesProps, ProductLightBulbsProps } from "@/models/product";
+import { createCablesAdapter } from "@/adapters";
 
 export const useGetData = () => {
   const { addAllProducts } = useProducts({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  /// collection: CollectionReference<DocumentData>
 
   const getData = async () => {
     setLoading(true);
@@ -23,17 +22,21 @@ export const useGetData = () => {
         element.data()
       );
 
-      const cablesData = resCables.docs.map((element) => element.data());
-
-      const newArrayLightbulbsData = lightbulbsData.map(
+      const adaptedLightbulbsData = lightbulbsData.map(
         (lightbulb: ProductLightBulbsProps) =>
           createLightbulbsAdapter(lightbulb)
       );
 
+      const cablesData: any[] = resCables.docs.map((element) => element.data());
+
+      const adaptedCablesData = cablesData.map((cable: ProductCablesProps) =>
+        createCablesAdapter(cable)
+      );
+
       const ALL_PRODUCTS = {
         allProducts: [
-          { lightBulbs: newArrayLightbulbsData },
-          { cables: cablesData },
+          { lightBulbs: adaptedLightbulbsData },
+          { cables: adaptedCablesData },
           { miscellaneus: [] },
         ],
       };
@@ -53,8 +56,6 @@ export const useGetData = () => {
         discount: doc.data().discount,
         image: doc.data().image,
       }));
-
-      
       */
     } catch (error: any) {
       setError(error);

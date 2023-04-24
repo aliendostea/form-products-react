@@ -4,6 +4,7 @@ import { validationSchemaLightBulbs } from "@/validation/validationSchema";
 import { createProvisionalId } from "@/utilities/utilitiesFunctions";
 import {
   Button,
+  Card,
   FormBoxImgs,
   FormStyled,
   ImageFormEmpty,
@@ -15,7 +16,6 @@ import {
 } from "@/components";
 import { lightbulbsRef } from "@/config/firebase-config";
 import { useSetDataFirebase } from "@/hooks/setData/use-set-data";
-import Card from "@/components/card";
 import Switch from "@mui/material/Switch";
 import { ProductLightBulbsProps } from "@/models/product";
 import { INITIAL_LIGHT_BULBS_DATA } from "@/store/initialProductData";

@@ -72,7 +72,7 @@ const SearchingHome = ({ products }: SearchingHomeProps) => {
           <AddNewProductTest />
         </AddNewProduct>
         <TableProducts
-          typeProduct={productTypeSelected}
+          typeProduct="searchingProduct"
           mainTitle="Searched products"
           dataTableRows={products}
           handleClickEditProduct={handleClickEditProduct}

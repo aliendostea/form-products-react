@@ -1,5 +1,6 @@
 export * from "./button";
 export * from "./card";
+export * from "./fallbackAppOnLoad";
 export * from "./form";
 export * from "./header";
 export * from "./inputFiles";

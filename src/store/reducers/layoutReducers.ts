@@ -8,12 +8,14 @@ enum CurrentPageValues {
   A = "LIGHT_BULBS",
   B = "CABLES",
   C = "MISCELLANEUS",
+  D = "SEARCHING_PRODUCT",
 }
 
 export const CURRENT_PAGE_VALUES = {
   LIGHT_BULBS: CurrentPageValues.A,
   CABLES: CurrentPageValues.B,
   MISCELLANEUS: CurrentPageValues.C,
+  SEARCHING_PRODUCT: CurrentPageValues.D,
 };
 
 export const layoutInitialState: LayoutStateProps = {

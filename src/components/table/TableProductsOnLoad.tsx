@@ -1,12 +1,31 @@
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import styled, { keyframes } from "styled-components";
+import { TableParentStyled } from "./TableStyled.styled";
 
 const animationStart = keyframes`
    100% {
       transform: translateX(100%);
     }
+`;
+
+export const TableProductsOnLoadStyled = styled(TableParentStyled)`
+  gap: 2rem;
+  padding: 3.5rem 2rem;
+  margin-bottom: 2rem;
+`;
+
+export const SkeletonLoaderTitleTable = styled.div`
+  display: grid;
+  grid-template-columns: minmax(15rem, 28rem);
+
+  & > span {
+    height: 2.5rem;
+  }
+`;
+
+export const SkeletonLoaderBox = styled.div`
+  display: grid;
+  grid-template-columns: 3rem 10rem 1fr;
+  align-items: center;
 `;
 
 const SkeletonLoader = styled.span`
@@ -63,35 +82,22 @@ const SkeletonImgLoader = styled.span`
   }
 `;
 
-interface SkeletonTableBodyProps {
-  id: string;
-}
-
-const SkeletonTableBody = ({ id }: SkeletonTableBodyProps) => {
+const TableProductsOnLoad = () => {
   return (
-    <TableBody key={`skeletonLoaderTable-${id}`}>
-      <TableRow role="checkbox" tabIndex={-1} key={"009909"}>
-        <TableCell>
-          <SkeletonLoader />
-        </TableCell>
-        <TableCell align="left">
-          <SkeletonImgLoader />
-        </TableCell>
-        <TableCell component="th" id="9998" scope="row" padding="none">
-          <SkeletonLoader />
-        </TableCell>
-        {Array.from({ length: 5 }, (v, i) => (
-          <TableCell key={`skeletonTableCell-${i}-${id}`} align="left">
-            <SkeletonLoader />
-          </TableCell>
-        ))}
+    <TableProductsOnLoadStyled>
+      <SkeletonLoaderTitleTable>
+        <SkeletonLoader />
+      </SkeletonLoaderTitleTable>
 
-        <TableCell align="left">
+      {Array.from({ length: 5 }, (v, i) => (
+        <SkeletonLoaderBox key={`SkeletonLoaderBox-table${i}`}>
           <SkeletonLoader />
-        </TableCell>
-      </TableRow>
-    </TableBody>
+          <SkeletonImgLoader />
+          <SkeletonLoader />
+        </SkeletonLoaderBox>
+      ))}
+    </TableProductsOnLoadStyled>
   );
 };
 
-export default SkeletonTableBody;
+export default TableProductsOnLoad;

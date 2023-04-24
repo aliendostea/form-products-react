@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -18,3 +19,4 @@ export const productsCollectionRef = collection(db, "products");
 export const cablesRef = collection(db, "cables");
 export const lightbulbsRef = collection(db, "lightBulbs");
 export const storage = getStorage(app);
+export const authApp = getAuth(app);

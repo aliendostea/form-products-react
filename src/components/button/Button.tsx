@@ -81,6 +81,7 @@ interface ButtonProps {
   label?: string;
   disabled?: boolean;
   btnLoader?: boolean;
+  form?: string;
   handleOnClick?: () => void;
 }
 
@@ -88,6 +89,7 @@ const Button = ({
   label,
   disabled = false,
   btnLoader,
+  form,
   handleOnClick,
 }: ButtonProps) => {
   return (
@@ -95,6 +97,7 @@ const Button = ({
       onClick={handleOnClick}
       type="submit"
       disabled={disabled}
+      form={form}
       isLoading={btnLoader}
     >
       {label && label}

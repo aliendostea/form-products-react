@@ -10,7 +10,31 @@ export const AddNewProduct = styled.div`
   gap: 17px;
 `;
 
-export const AddNewProductBtn = styled.button`
+interface AddNewProductBtnProps {
+  bg?: string;
+  margin?: string;
+}
+
+function AddNewProductBtnBg(bg: string) {
+  if (bg === "white") {
+    return css`
+      width: 15rem;
+      background-color: #eee;
+      justify-self: center;
+
+      & > svg {
+        fill: var(--color-primary);
+      }
+
+      & > span {
+        color: var(--color-primary);
+      }
+    `;
+  }
+  return "";
+}
+
+export const AddNewProductBtn = styled.button<AddNewProductBtnProps>`
   height: 5rem;
   display: grid;
   grid-template-columns: 3rem 1fr;
@@ -34,8 +58,9 @@ export const AddNewProductBtn = styled.button`
     white-space: nowrap;
     color: #f6f6f6;
   }
-
-  &:hover {
+  ${({ bg }) => (bg ? AddNewProductBtnBg("white") : "")}
+  ${({ margin }) => (margin ? `margin: ${margin};` : "")}
+    &:hover {
     transform: translateY(-3px);
   }
 `;
@@ -46,7 +71,9 @@ export const FormStyled = styled.form`
   grid-template-columns: repeat(2, 1fr);
   gap: 1.4rem 1rem;
   padding: 10px 0;
+  padding: 10px 14px 10px 14px;
   overflow: hidden;
+  overflow-y: scroll;
 
   ${device.tabPort} {
     overflow-y: scroll;

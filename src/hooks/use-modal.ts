@@ -17,8 +17,16 @@ const useModal = () => {
     if (e.target.className?.animVal !== undefined) return;
 
     const toast = document.querySelector("#toast-box");
+    const addModelWattsBomb = document.querySelector(
+      "#box-add-model-watts-bomb"
+    );
 
     if (e.target.id === "toast-box" || toast?.contains(e.target)) return;
+    if (
+      e.target.id === "box-add-model-watts-bomb" ||
+      addModelWattsBomb?.contains(e.target)
+    )
+      return;
     if (modalRef.current?.contains(e.target)) return;
 
     removeElAnimation();
